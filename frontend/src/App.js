@@ -1,26 +1,34 @@
-import React, { useState, useRef, useCallback, Component } from 'react'
-import useBookSearch from './useBookSearch'
+import React, { Component } from 'react'
 import SimpleButton from './SimpleButton'
 import ApiRequest from './ApiRequest'
-import * as ReactDOM from 'react-dom';
 
 class App extends Component {
+  messagesEndRef = React.createRef()
+
   state = {
     lastSelected: 0,
-    apiRequest: {}
+    apiRequest: {},
+    lastClickUpdatedSelected: false
   }
 
   fun = (innerIndex, selectedValue) => {
     let lastSelected = this.state.lastSelected
+    let lastClickUpdatedSelected = false
     if (innerIndex >= lastSelected) {
       lastSelected = innerIndex + 1
+      lastClickUpdatedSelected = true
     }
 
     let apiRequest = this.state.apiRequest
     apiRequest[innerIndex] = selectedValue
 
-    
-    this.setState({ lastSelected: lastSelected, apiRequest: apiRequest })
+    this.setState({ lastSelected: lastSelected, apiRequest: apiRequest, lastClickUpdatedSelected: lastClickUpdatedSelected })
+  }
+
+  componentDidUpdate () {
+    if (this.state.lastClickUpdatedSelected) {
+      this.messagesEndRef.current.scrollIntoView({ behavior: 'smooth' })
+    }
   }
 
   render() {
@@ -31,7 +39,12 @@ class App extends Component {
     ]
 
     let req = <ApiRequest apiRequest={this.state.apiRequest} />
-    return (<><div>{buttons}</div><div>{req}</div></>)
+    
+    return (<>
+      <div>{buttons}</div>
+      <div ref={this.messagesEndRef} />
+      <div>{req}</div>
+    </>)
   }
 }
 
