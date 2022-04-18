@@ -11,7 +11,7 @@ class App extends Component {
     lastClickUpdatedSelected: false
   }
 
-  fun = (innerIndex, selectedValue) => {
+  fun = (innerIndex, selectedValue, filterName) => {
     let lastSelected = this.state.lastSelected
     let lastClickUpdatedSelected = false
     if (innerIndex >= lastSelected) {
@@ -20,7 +20,11 @@ class App extends Component {
     }
 
     let apiRequest = this.state.apiRequest
-    apiRequest[innerIndex] = selectedValue
+    switch (selectedValue) {
+      case 'YES': apiRequest[filterName] = true; break;
+      case 'NO': apiRequest[filterName] = false; break;
+      default: delete apiRequest[filterName]
+    }
 
     this.setState({ lastSelected: lastSelected, apiRequest: apiRequest, lastClickUpdatedSelected: lastClickUpdatedSelected })
   }
@@ -33,9 +37,9 @@ class App extends Component {
 
   render() {
     let buttons = [
-      <SimpleButton text="pergunta 1" id={0} fatherStateFunction={this.fun} fatherId={this.state.lastSelected} updateStateJSON={this.updateStateJSON} />,
-      <SimpleButton text="pergunta 2" id={1} fatherStateFunction={this.fun} fatherId={this.state.lastSelected} updateStateJSON={this.updateStateJSON} />,
-      <SimpleButton text="pergunta 3" id={2} fatherStateFunction={this.fun} fatherId={this.state.lastSelected} updateStateJSON={this.updateStateJSON} />
+      <SimpleButton text="Ready to live?" filterName="READY_TO_LIVE" id={0} fatherStateFunction={this.fun} fatherId={this.state.lastSelected} updateStateJSON={this.updateStateJSON} />,
+      <SimpleButton text="Pet friendly?" filterName="PET_FRIENDLY" id={1} fatherStateFunction={this.fun} fatherId={this.state.lastSelected} updateStateJSON={this.updateStateJSON} />,
+      <SimpleButton text="Has a pool?" filterName="POOL" id={2} fatherStateFunction={this.fun} fatherId={this.state.lastSelected} updateStateJSON={this.updateStateJSON} />
     ]
 
     let req = <ApiRequest apiRequest={this.state.apiRequest} />

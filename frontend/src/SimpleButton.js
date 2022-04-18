@@ -6,6 +6,7 @@ export default class SimpleButton extends React.Component {
         this.state = {
             text: props.text, 
             id: props.id, 
+            filterName: props.filterName,
             wasClicked: false, 
             selected: null, 
             fatherStateFunction: props.fatherStateFunction, 
@@ -34,7 +35,7 @@ export default class SimpleButton extends React.Component {
             wasClicked: true,
             selected: selectedValue
         })
-        this.state.fatherStateFunction(this.state.id, selectedValue)
+        this.state.fatherStateFunction(this.state.id, selectedValue, this.state.filterName)
     }
 
     render() {
