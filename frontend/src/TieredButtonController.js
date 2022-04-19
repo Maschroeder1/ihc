@@ -13,7 +13,7 @@ export default class TieredButtonController extends React.Component {
             fatherStateFunction: props.fatherStateFunction,
             apiRequest: props.apiRequest,
             parentButtons: props.buttons,
-            childrenButtons: {}
+            childrenButtons: []
         }
     }
 
@@ -23,65 +23,66 @@ export default class TieredButtonController extends React.Component {
 
     gridItems(buttons) {
         let a = [
-            <TieredButtonButton text="child 1" filterName="TEMP4" parentVisibleFunction={() => {console.log("child 1")}} key="TEMP4" />,
-            <TieredButtonButton text="child 2" filterName="TEMP5" parentVisibleFunction={() => {console.log("child 2")}} key="TEMP5" />
+            <TieredButtonButton text="child 1" filterName={"" + this.state.id + "TEMP4"} parentVisibleFunction={this.somethingFilterFunction} key="TEMP4" children={[]} />,
+            <TieredButtonButton text="child 2" filterName={"" + this.state.id + "TEMP5"} parentVisibleFunction={this.somethingFilterFunction} key="TEMP5" children={[]} />
         ]
         let b = [
-            <TieredButtonButton text="child 3" filterName="TEMP6" parentVisibleFunction={() => {console.log("child 3")}} key="TEMP6" />,
-            <TieredButtonButton text="child 4" filterName="TEMP7" parentVisibleFunction={() => {console.log("child 4")}} key="TEMP7" />
+            <TieredButtonButton text="child 3" filterName={"" + this.state.id + "TEMP6"} parentVisibleFunction={this.somethingFilterFunction} key="TEMP6" children={[]} />,
+            <TieredButtonButton text="child 4" filterName={"" + this.state.id + "TEMP7"} parentVisibleFunction={this.somethingFilterFunction} key="TEMP7" children={[]} />
         ]
         let c = [
-            <TieredButtonButton text="child 5" filterName="TEMP8" parentVisibleFunction={() => {console.log("child 5")}} key="TEMP8" />,
-            <TieredButtonButton text="child 6" filterName="TEMP9" parentVisibleFunction={() => {console.log("child 6")}} key="TEMP9" />
+            <TieredButtonButton text="child 5" filterName={"" + this.state.id + "TEMP8"} parentVisibleFunction={this.somethingFilterFunction} key="TEMP8" children={[]} />,
+            <TieredButtonButton text="child 6" filterName={"" + this.state.id + "TEMP9"} parentVisibleFunction={this.somethingFilterFunction} key="TEMP9" children={[]} />
         ]
         let d = [
-            <TieredButtonButton text="child 7" filterName="TEMP10" parentVisibleFunction={() => {console.log("child 7")}} key="TEMP10" />,
-            <TieredButtonButton text="child 8" filterName="TEMP11" parentVisibleFunction={() => {console.log("child 8")}} key="TEMP11" />
+            <TieredButtonButton text="child 7" filterName={"" + this.state.id + "TEMP10"} parentVisibleFunction={this.somethingFilterFunction} key="TEMP10" children={[]} />,
+            <TieredButtonButton text="child 8" filterName={"" + this.state.id + "TEMP11"} parentVisibleFunction={this.somethingFilterFunction} key="TEMP11" children={[]} />
         ]
         return (
             <>
                 <section style={{ flexDirection: "row", height: '200px', "margin": "2%", "textAlign": "center"}}>
-                        <TieredButtonButton text="button 1" filterName="TEMP0" parentVisibleFunction={this.modifyVisibleChildren} children={a} />
-                        <TieredButtonButton text="button 2" filterName="TEMP1" parentVisibleFunction={this.modifyVisibleChildren} children={b} />
-                        <TieredButtonButton text="button 3" filterName="TEMP2" parentVisibleFunction={this.modifyVisibleChildren} children={c} />
-                        <TieredButtonButton text="button 4" filterName="TEMP3" parentVisibleFunction={this.modifyVisibleChildren} children={d} />
+                        <TieredButtonButton text="button 1" filterName="TEMP0" parentVisibleFunction={this.somethingFilterFunction} children={a} />
+                        <TieredButtonButton text="button 2" filterName="TEMP1" parentVisibleFunction={this.somethingFilterFunction} children={b} />
+                        <TieredButtonButton text="button 3" filterName="TEMP2" parentVisibleFunction={this.somethingFilterFunction} children={c} />
+                        <TieredButtonButton text="button 4" filterName="TEMP3" parentVisibleFunction={this.somethingFilterFunction} children={d} />
                 </section>
             </>
         )
     }
 
-    modifyVisibleChildren = (filterName, subButtonChildren) => {
-        let visibleChildren = this.state.childrenButtons
-
-        if (subButtonChildren.length === 0) {
-            delete visibleChildren[filterName]
+    // more spaghetti than an italian restaurant
+    somethingFilterFunction = (arg1, arg2) => {
+        if (arg2 !== null) {
+        
+            this.modifyVisibleChildren(arg1, arg2)
         } else {
-            visibleChildren[filterName] = subButtonChildren
+            this.childFlip(arg1)
         }
-
-        this.setState({ childrenButtons: visibleChildren })
     }
 
-    getVisibleChildren() {
-        let allChildren = []
+    modifyVisibleChildren = (childrenToAdd, childrenToRemove) => {
+        let visibleChildren = this.state.childrenButtons.map((child) => child)
+        visibleChildren.push(...childrenToAdd)
 
-        for (let key of Object.keys(this.state.childrenButtons)) {
-            allChildren.push(...this.state.childrenButtons[key])
-        }
+        visibleChildren = visibleChildren.filter((child) => !childrenToRemove.includes(child))
 
-        return allChildren
+        this.setState({ childrenButtons: visibleChildren })
+        this.state.fatherStateFunction(this.state.id, visibleChildren.map((child) => child.props.filterName))
+    }
+
+    childFlip = (filterName) => {
+        this.state.fatherStateFunction(this.state.id, [filterName])
     }
 
     render() {
-        let gridItems = this.gridItems(this.state.buttons)
-
         return (
             <>
-                { gridItems }
-                { this.getVisibleChildren() }
-                {this.isVisible() &&
-                    <div>ababa</div>
-                }
+            {this.isVisible() &&
+                <div> { this.gridItems(this.state.buttons) } </div>
+            }
+            {this.isVisible() &&
+                <div> { this.state.childrenButtons } </div>
+            }
             </>
         )
     }
