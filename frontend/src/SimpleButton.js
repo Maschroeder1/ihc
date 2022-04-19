@@ -22,11 +22,11 @@ export default class SimpleButton extends React.Component {
         let color = this.state.selected === value ? strong_color : light_color
 
         return <button 
-        onMouseOver={event => event.target.style.background = strong_color} 
-        onMouseOut={event => event.target.style.background = color}
-        style={{ "background":color, "height": "25%", width: "100%", "margin-bottom": "2%" }} 
-        onClick={() => this.click(value)}>
-            { value }
+                onMouseOver={event => event.target.style.background = strong_color} 
+                onMouseOut={event => event.target.style.background = color}
+                style={{ "background":color, "height": "25%", width: "100%", "margin-bottom": "2%" }} 
+                onClick={() => this.click(value)}>
+                { value }
             </button>
     }
 

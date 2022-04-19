@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import SimpleButton from './SimpleButton'
 import ApiRequest from './ApiRequest'
+import TieredButtonController from './TieredButtonController'
 
 class App extends Component {
   messagesEndRef = React.createRef()
@@ -11,7 +12,7 @@ class App extends Component {
     lastClickUpdatedSelected: false
   }
 
-  fun = (innerIndex, selectedValue, filterName) => {
+  simpleButtonFunction = (innerIndex, selectedValue, filterName) => {
     let lastSelected = this.state.lastSelected
     let lastClickUpdatedSelected = false
     if (innerIndex >= lastSelected) {
@@ -29,6 +30,10 @@ class App extends Component {
     this.setState({ lastSelected: lastSelected, apiRequest: apiRequest, lastClickUpdatedSelected: lastClickUpdatedSelected })
   }
 
+  tieredButtonFunction = (innerIndex, selectedValue, filterName) => {
+    console.log("idk")
+  }
+
   componentDidUpdate () {
     if (this.state.lastClickUpdatedSelected) {
       this.messagesEndRef.current.scrollIntoView({ behavior: 'smooth' })
@@ -37,14 +42,15 @@ class App extends Component {
 
   render() {
     let buttons = [
-      <SimpleButton text="Ready to live?" filterName="READY_TO_LIVE" id={0} fatherStateFunction={this.fun} fatherId={this.state.lastSelected} updateStateJSON={this.updateStateJSON} />,
-      <SimpleButton text="Pet friendly?" filterName="PET_FRIENDLY" id={1} fatherStateFunction={this.fun} fatherId={this.state.lastSelected} updateStateJSON={this.updateStateJSON} />,
-      <SimpleButton text="Has a pool?" filterName="POOL" id={2} fatherStateFunction={this.fun} fatherId={this.state.lastSelected} updateStateJSON={this.updateStateJSON} />
+      <SimpleButton text="Ready to live?" filterName="READY_TO_LIVE" id={0} fatherStateFunction={this.simpleButtonFunction} fatherId={this.state.lastSelected} updateStateJSON={this.updateStateJSON} />,
+      <SimpleButton text="Pet friendly?" filterName="PET_FRIENDLY" id={1} fatherStateFunction={this.simpleButtonFunction} fatherId={this.state.lastSelected} updateStateJSON={this.updateStateJSON} />,
+      <SimpleButton text="Has a pool?" filterName="POOL" id={2} fatherStateFunction={this.simpleButtonFunction} fatherId={this.state.lastSelected} updateStateJSON={this.updateStateJSON} />
     ]
 
     let req = <ApiRequest apiRequest={this.state.apiRequest} />
     
     return (<>
+      <div><TieredButtonController text="Ready to live?" filterName="READY_TO_LIVE" id={0} fatherStateFunction={this.tieredButtonFunction} fatherId={this.state.lastSelected} updateStateJSON={this.updateStateJSON}/></div>
       <div>{buttons}</div>
       <div ref={this.messagesEndRef} />
       <div>{req}</div>
