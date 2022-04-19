@@ -23,24 +23,24 @@ export default class TieredButtonController extends React.Component {
 
     gridItems(buttons) {
         let a = [
-            <TieredButtonButton text="child 1" filterName="TEMP4" parentVisibleFunction={() => {console.log("child 1")}} />,
-            <TieredButtonButton text="child 2" filterName="TEMP5" parentVisibleFunction={() => {console.log("child 2")}} />
+            <TieredButtonButton text="child 1" filterName="TEMP4" parentVisibleFunction={() => {console.log("child 1")}} key="TEMP4" />,
+            <TieredButtonButton text="child 2" filterName="TEMP5" parentVisibleFunction={() => {console.log("child 2")}} key="TEMP5" />
         ]
         let b = [
-            <TieredButtonButton text="child 3" filterName="TEMP6" parentVisibleFunction={() => {console.log("child 3")}} />,
-            <TieredButtonButton text="child 4" filterName="TEMP7" parentVisibleFunction={() => {console.log("child 4")}} />
+            <TieredButtonButton text="child 3" filterName="TEMP6" parentVisibleFunction={() => {console.log("child 3")}} key="TEMP6" />,
+            <TieredButtonButton text="child 4" filterName="TEMP7" parentVisibleFunction={() => {console.log("child 4")}} key="TEMP7" />
         ]
         let c = [
-            <TieredButtonButton text="child 5" filterName="TEMP8" parentVisibleFunction={() => {console.log("child 5")}} />,
-            <TieredButtonButton text="child 6" filterName="TEMP9" parentVisibleFunction={() => {console.log("child 6")}} />
+            <TieredButtonButton text="child 5" filterName="TEMP8" parentVisibleFunction={() => {console.log("child 5")}} key="TEMP8" />,
+            <TieredButtonButton text="child 6" filterName="TEMP9" parentVisibleFunction={() => {console.log("child 6")}} key="TEMP9" />
         ]
         let d = [
-            <TieredButtonButton text="child 7" filterName="TEMP10" parentVisibleFunction={() => {console.log("child 7")}} />,
-            <TieredButtonButton text="child 8" filterName="TEMP11" parentVisibleFunction={() => {console.log("child 8")}} />
+            <TieredButtonButton text="child 7" filterName="TEMP10" parentVisibleFunction={() => {console.log("child 7")}} key="TEMP10" />,
+            <TieredButtonButton text="child 8" filterName="TEMP11" parentVisibleFunction={() => {console.log("child 8")}} key="TEMP11" />
         ]
         return (
             <>
-                <section style={{ flexDirection: "row", height: '200px', "margin": "2%", "text-align": "center"}}>
+                <section style={{ flexDirection: "row", height: '200px', "margin": "2%", "textAlign": "center"}}>
                         <TieredButtonButton text="button 1" filterName="TEMP0" parentVisibleFunction={this.modifyVisibleChildren} children={a} />
                         <TieredButtonButton text="button 2" filterName="TEMP1" parentVisibleFunction={this.modifyVisibleChildren} children={b} />
                         <TieredButtonButton text="button 3" filterName="TEMP2" parentVisibleFunction={this.modifyVisibleChildren} children={c} />
@@ -60,7 +60,6 @@ export default class TieredButtonController extends React.Component {
         }
 
         this.setState({ childrenButtons: visibleChildren })
-        console.log(this.state.childrenButtons)
     }
 
     getVisibleChildren() {

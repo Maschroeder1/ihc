@@ -25,8 +25,9 @@ export default class TieredButtonButton extends React.Component {
 
     render() {
         return <button 
-            onClick={() => this.click()} 
-            style={{ "height": "80%", width: "20%", "margin": "2%", "margin-right": "2%" }}>
-                { this.state.text }</button>
+                    onClick={() => this.click()} 
+                    style={{ "height": "80%", width: "20%", "margin": "2%", "marginRight": "2%" }}>
+                { this.state.text }
+            </button>
     }
 }

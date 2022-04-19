@@ -13,6 +13,7 @@ export default class ApiRequest extends React.Component {
             hasPool={hasPool}
             readyToLive={readyToLive}
             currentFilter={currentFilter}
+            key={price}
         />
     }
 

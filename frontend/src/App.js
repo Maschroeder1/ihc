@@ -42,15 +42,15 @@ class App extends Component {
 
   render() {
     let buttons = [
-      <SimpleButton text="Ready to live?" filterName="READY_TO_LIVE" id={0} fatherStateFunction={this.simpleButtonFunction} fatherId={this.state.lastSelected} updateStateJSON={this.updateStateJSON} />,
-      <SimpleButton text="Pet friendly?" filterName="PET_FRIENDLY" id={1} fatherStateFunction={this.simpleButtonFunction} fatherId={this.state.lastSelected} updateStateJSON={this.updateStateJSON} />,
-      <SimpleButton text="Has a pool?" filterName="POOL" id={2} fatherStateFunction={this.simpleButtonFunction} fatherId={this.state.lastSelected} updateStateJSON={this.updateStateJSON} />
+      <SimpleButton text="Ready to live?" filterName="READY_TO_LIVE" id={0} key={0} fatherStateFunction={this.simpleButtonFunction} fatherId={this.state.lastSelected} updateStateJSON={this.updateStateJSON} />,
+      <SimpleButton text="Pet friendly?" filterName="PET_FRIENDLY" id={1} key={1} fatherStateFunction={this.simpleButtonFunction} fatherId={this.state.lastSelected} updateStateJSON={this.updateStateJSON} />,
+      <SimpleButton text="Has a pool?" filterName="POOL" id={2} key={2} fatherStateFunction={this.simpleButtonFunction} fatherId={this.state.lastSelected} updateStateJSON={this.updateStateJSON} />
     ]
 
     let req = <ApiRequest apiRequest={this.state.apiRequest} />
     
     return (<>
-      <div><TieredButtonController text="Ready to live?" filterName="READY_TO_LIVE" id={0} fatherStateFunction={this.tieredButtonFunction} fatherId={this.state.lastSelected} updateStateJSON={this.updateStateJSON}/></div>
+      <div><TieredButtonController text="Ready to live?" filterName="READY_TO_LIVE" id={-1} key={-1} fatherStateFunction={this.tieredButtonFunction} fatherId={this.state.lastSelected} updateStateJSON={this.updateStateJSON}/></div>
       <div>{buttons}</div>
       <div ref={this.messagesEndRef} />
       <div>{req}</div>
