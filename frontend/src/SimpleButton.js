@@ -9,13 +9,13 @@ export default class SimpleButton extends React.Component {
             filterName: props.filterName,
             wasClicked: false, 
             selected: null, 
-            fatherStateFunction: props.fatherStateFunction, 
+            parentStateFunction: props.parentStateFunction, 
             apiRequest: props.apiRequest
         }
     }
 
     isVisible() {
-        return this.state.id <= this.props.fatherId
+        return this.state.id <= this.props.parentId
     }
 
     button(light_color, strong_color, value) {
@@ -35,7 +35,7 @@ export default class SimpleButton extends React.Component {
             wasClicked: true,
             selected: selectedValue
         })
-        this.state.fatherStateFunction(this.state.id, selectedValue, this.state.filterName)
+        this.state.parentStateFunction(this.state.id, selectedValue, this.state.filterName)
     }
 
     render() {

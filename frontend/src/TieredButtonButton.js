@@ -6,10 +6,7 @@ export default class TieredButtonButton extends React.Component {
         this.state = {
             text: props.text,
             filterName: props.filterName,
-            wasClicked: false,
             value: null,
-            fatherStateFunction: props.fatherStateFunction,
-            apiRequest: props.apiRequest,
             children: props.children,
             parentVisibleFunction: props.parentVisibleFunction
         }
@@ -44,17 +41,17 @@ export default class TieredButtonButton extends React.Component {
     }
 
     render() {
-        let strong_color = "#0015ff"
-        let light_color = "#9ea6ff"
+        const STRONG_COLOR = "#0015ff"
+        const LIGHT_COLOR = "#9ea6ff"
         let currentColor
         let opositeColor
 
         if (this.state.value === null) {
-            currentColor = light_color
-            opositeColor = strong_color
+            currentColor = LIGHT_COLOR
+            opositeColor = STRONG_COLOR
         } else {
-            currentColor = strong_color
-            opositeColor = light_color
+            currentColor = STRONG_COLOR
+            opositeColor = LIGHT_COLOR
         }
 
         if (!this.isParent()) {

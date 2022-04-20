@@ -8,7 +8,7 @@ export default class TieredButtonController extends React.Component {
             text: props.text,
             id: props.id,
             filterName: props.filterName,
-            fatherStateFunction: props.fatherStateFunction,
+            parentStateFunction: props.parentStateFunction,
             buttons: this.asButtons(props.buttons),
             visibleChildren: [],
             mustBeInFilters: [],
@@ -41,24 +41,23 @@ export default class TieredButtonController extends React.Component {
     }
 
     modifyVisibleChildren = (childrenToAdd, childrenToRemove) => {
-        let visibleChildren = this.state.visibleChildren.map((child) => child)
+        let visibleChildren = [...this.state.visibleChildren]
         visibleChildren.push(...childrenToAdd)
-
         visibleChildren = visibleChildren.filter((child) => !childrenToRemove.includes(child))
 
-        let childrenToAddFilters = this.childrenToFilterNames(childrenToAdd)
-        let childrenToRemoveFilters = this.childrenToFilterNames(childrenToRemove)
+        const FILTER_MUST_BE_ADDED = this.childrenToFilterNames(childrenToAdd)
+        const FILTER_MUST_BE_REMOVED = this.childrenToFilterNames(childrenToRemove)
 
         let mustBeInFilters = [...this.state.mustBeInFilters]
-        mustBeInFilters.push(...childrenToAddFilters)
-        mustBeInFilters = mustBeInFilters.filter((filter) => !childrenToRemoveFilters.includes(filter))
+        mustBeInFilters.push(...FILTER_MUST_BE_ADDED)
+        mustBeInFilters = mustBeInFilters.filter((filter) => !FILTER_MUST_BE_REMOVED.includes(filter))
 
         let mustNotBeInFilters = [...this.state.mustNotBeInFilters]
-        mustNotBeInFilters.push(...childrenToRemoveFilters)
-        mustNotBeInFilters = mustNotBeInFilters.filter((filter) => !childrenToAddFilters.includes(filter))
+        mustNotBeInFilters.push(...FILTER_MUST_BE_REMOVED)
+        mustNotBeInFilters = mustNotBeInFilters.filter((filter) => !FILTER_MUST_BE_ADDED.includes(filter))
 
         this.setState({ visibleChildren: visibleChildren, mustBeInFilters: mustBeInFilters, mustNotBeInFilters: mustNotBeInFilters })
-        this.state.fatherStateFunction(this.state.id, this.state.filterName, mustBeInFilters, mustNotBeInFilters)
+        this.state.parentStateFunction(this.state.id, this.state.filterName, mustBeInFilters, mustNotBeInFilters)
     }
 
     childrenToFilterNames(children) {
@@ -78,7 +77,7 @@ export default class TieredButtonController extends React.Component {
         }
 
         this.setState({ mustBeInFilters: mustBeInFilters, mustNotBeInFilters: mustNotBeInFilters})
-        this.state.fatherStateFunction(this.state.id, this.state.filterName, mustBeInFilters, mustNotBeInFilters)
+        this.state.parentStateFunction(this.state.id, this.state.filterName, mustBeInFilters, mustNotBeInFilters)
     }
 
     render() {
@@ -95,16 +94,16 @@ export default class TieredButtonController extends React.Component {
     }
 
     isVisible() {
-        return this.state.id <= this.props.fatherId
+        return this.state.id <= this.props.parentId
     }
 
     gridItems(buttons, height) {
-        const maxButtonsPerRow = 4
+        const MAX_BUTTONS_PER_ROW = 4
         let sections = []
 
-        for (let i=0; i < buttons.length; i+= maxButtonsPerRow) {
+        for (let i=0; i < buttons.length; i += MAX_BUTTONS_PER_ROW) {
             sections.push(<section style={{ flexDirection: "row", height: height, "margin": "2%", "textAlign": "center"}} key={i}>
-                { buttons.slice(i, i+maxButtonsPerRow) }
+                { buttons.slice(i, i+MAX_BUTTONS_PER_ROW) }
             </section>)
         }
 

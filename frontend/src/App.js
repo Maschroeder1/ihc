@@ -65,11 +65,11 @@ class App extends Component {
       {text:"button 3", filterName:"ANY3", children:[{text:"child 5", filterName:"CHILD_5"}, {text:"child 6", filterName:"CHILD_6"}]},
       {text:"button 4", filterName:"ANY4", children:[{text:"child 7", filterName:"CHILD_7"}, {text:"child 8", filterName:"CHILD_8"}]}]
     let buttons = [
-      <SimpleButton text="Ready to live?" filterName="READY_TO_LIVE" id={0} key={0} fatherStateFunction={this.simpleButtonFunction} fatherId={this.state.lastSelected} updateStateJSON={this.updateStateJSON} buttons={[1, 2]} />,
-      <TieredButtonController text="Ready to live?" filterName="HOUSE_TYPE" id={1} key={1} fatherStateFunction={this.tieredButtonFunction} fatherId={this.state.lastSelected} updateStateJSON={this.updateStateJSON} buttons={tieredButtons1} />,
-      <SimpleButton text="Pet friendly?" filterName="PET_FRIENDLY" id={2} key={2} fatherStateFunction={this.simpleButtonFunction} fatherId={this.state.lastSelected} updateStateJSON={this.updateStateJSON} />,
-      <SimpleButton text="Has a pool?" filterName="POOL" id={3} key={3} fatherStateFunction={this.simpleButtonFunction} fatherId={this.state.lastSelected} updateStateJSON={this.updateStateJSON} />,
-      //<TieredButtonController text="Ready to live?" filterName="ENUM_2" id={4} key={4} fatherStateFunction={this.tieredButtonFunction} fatherId={this.state.lastSelected} updateStateJSON={this.updateStateJSON} buttons={[3, 4]} />
+      <SimpleButton text="Ready to live?" filterName="READY_TO_LIVE" id={0} key={0} parentStateFunction={this.simpleButtonFunction} parentId={this.state.lastSelected} updateStateJSON={this.updateStateJSON} buttons={[1, 2]} />,
+      <TieredButtonController text="Ready to live?" filterName="HOUSE_TYPE" id={1} key={1} parentStateFunction={this.tieredButtonFunction} parentId={this.state.lastSelected} updateStateJSON={this.updateStateJSON} buttons={tieredButtons1} />,
+      <SimpleButton text="Pet friendly?" filterName="PET_FRIENDLY" id={2} key={2} parentStateFunction={this.simpleButtonFunction} parentId={this.state.lastSelected} updateStateJSON={this.updateStateJSON} />,
+      <SimpleButton text="Has a pool?" filterName="POOL" id={3} key={3} parentStateFunction={this.simpleButtonFunction} parentId={this.state.lastSelected} updateStateJSON={this.updateStateJSON} />,
+      //<TieredButtonController text="Ready to live?" filterName="ENUM_2" id={4} key={4} parentStateFunction={this.tieredButtonFunction} parentId={this.state.lastSelected} updateStateJSON={this.updateStateJSON} buttons={[3, 4]} />
     ]
 
     let req = <ApiRequest apiRequest={this.state.apiRequest} />
