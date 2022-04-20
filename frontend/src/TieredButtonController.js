@@ -67,11 +67,11 @@ export default class TieredButtonController extends React.Component {
         visibleChildren = visibleChildren.filter((child) => !childrenToRemove.includes(child))
 
         this.setState({ childrenButtons: visibleChildren })
-        this.state.fatherStateFunction(this.state.id, visibleChildren.map((child) => child.props.filterName))
+        this.state.fatherStateFunction(this.state.id, this.state.filterName, visibleChildren.map((child) => child.props.filterName))
     }
 
     childFlip = (filterName) => {
-        this.state.fatherStateFunction(this.state.id, [filterName])
+        this.state.fatherStateFunction(this.state.id, this.state.filterName, [filterName])
     }
 
     render() {
