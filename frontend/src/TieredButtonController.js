@@ -20,32 +20,15 @@ export default class TieredButtonController extends React.Component {
         if (buttonObjects === undefined) {
             return []
         }
-        let buttons = []
 
-        for (let button of buttonObjects) {
-            buttons.push(<TieredButtonButton 
-                text={button.text} 
-                filterName={button.filterName} 
-                key={button.filterName}
-                children={this.asButtons(button.children)}
-                parentVisibleFunction={this.somethingFilterFunction}/>)
-        }
-
-        return buttons
-    }
-
-    isVisible() {
-        return this.state.id <= this.props.fatherId
-    }
-
-    gridItems(buttons) {
-        return (
-            <>
-                <section style={{ flexDirection: "row", height: '200px', "margin": "2%", "textAlign": "center"}}>
-                        { buttons }
-                </section>
-            </>
-        )
+        return buttonObjects.map((buttonObject) => 
+            <TieredButtonButton
+                text={buttonObject.text}
+                filterName={buttonObject.filterName}
+                key={buttonObject.filterName}
+                children={this.asButtons(buttonObject.children)}
+                parentVisibleFunction={this.somethingFilterFunction}
+                />)
     }
 
     // more spaghetti than an italian restaurant
@@ -102,12 +85,29 @@ export default class TieredButtonController extends React.Component {
         return (
             <>
             {this.isVisible() &&
-                <div> { this.gridItems(this.state.buttons) } </div>
+                <div> { this.gridItems(this.state.buttons, '200px') } </div>
             }
             {this.isVisible() &&
-                <div> { this.state.visibleChildren } </div>
+                <div> { this.gridItems(this.state.visibleChildren, '100px') } </div>
             }
             </>
         )
+    }
+
+    isVisible() {
+        return this.state.id <= this.props.fatherId
+    }
+
+    gridItems(buttons, height) {
+        const maxButtonsPerRow = 4
+        let sections = []
+
+        for (let i=0; i < buttons.length; i+= maxButtonsPerRow) {
+            sections.push(<section style={{ flexDirection: "row", height: height, "margin": "2%", "textAlign": "center"}} key={i}>
+                { buttons.slice(i, i+maxButtonsPerRow) }
+            </section>)
+        }
+
+        return (<>{sections}</>)
     }
 }

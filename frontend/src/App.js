@@ -63,11 +63,10 @@ class App extends Component {
       {text:"button 1", filterName:"ANY1", children:[{text:"child 1", filterName:"CHILD_1"}, {text:"child 2", filterName:"CHILD_2"}]},
       {text:"button 2", filterName:"ANY2", children:[{text:"child 3", filterName:"CHILD_3"}, {text:"child 4", filterName:"CHILD_4"}]},
       {text:"button 3", filterName:"ANY3", children:[{text:"child 5", filterName:"CHILD_5"}, {text:"child 6", filterName:"CHILD_6"}]},
-      {text:"button 4", filterName:"ANY4", children:[{text:"child 7", filterName:"CHILD_7"}, {text:"child 8", filterName:"CHILD_8"}]},
-    ]
+      {text:"button 4", filterName:"ANY4", children:[{text:"child 7", filterName:"CHILD_7"}, {text:"child 8", filterName:"CHILD_8"}]}]
     let buttons = [
-      <TieredButtonController text="Ready to live?" filterName="HOUSE_TYPE" id={0} key={0} fatherStateFunction={this.tieredButtonFunction} fatherId={this.state.lastSelected} updateStateJSON={this.updateStateJSON} buttons={tieredButtons1} />,
-      <SimpleButton text="Ready to live?" filterName="READY_TO_LIVE" id={1} key={1} fatherStateFunction={this.simpleButtonFunction} fatherId={this.state.lastSelected} updateStateJSON={this.updateStateJSON} buttons={[1, 2]} />,
+      <SimpleButton text="Ready to live?" filterName="READY_TO_LIVE" id={0} key={0} fatherStateFunction={this.simpleButtonFunction} fatherId={this.state.lastSelected} updateStateJSON={this.updateStateJSON} buttons={[1, 2]} />,
+      <TieredButtonController text="Ready to live?" filterName="HOUSE_TYPE" id={1} key={1} fatherStateFunction={this.tieredButtonFunction} fatherId={this.state.lastSelected} updateStateJSON={this.updateStateJSON} buttons={tieredButtons1} />,
       <SimpleButton text="Pet friendly?" filterName="PET_FRIENDLY" id={2} key={2} fatherStateFunction={this.simpleButtonFunction} fatherId={this.state.lastSelected} updateStateJSON={this.updateStateJSON} />,
       <SimpleButton text="Has a pool?" filterName="POOL" id={3} key={3} fatherStateFunction={this.simpleButtonFunction} fatherId={this.state.lastSelected} updateStateJSON={this.updateStateJSON} />,
       //<TieredButtonController text="Ready to live?" filterName="ENUM_2" id={4} key={4} fatherStateFunction={this.tieredButtonFunction} fatherId={this.state.lastSelected} updateStateJSON={this.updateStateJSON} buttons={[3, 4]} />
