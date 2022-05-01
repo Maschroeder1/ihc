@@ -30,10 +30,16 @@ export default class RentalItem extends React.Component {
 
     render() {
         return (
-            <><div>{
-                this.isVisible(this.props.currentFilter.PET_FRIENDLY, this.props.currentFilter.POOL, this.props.currentFilter.READY_TO_LIVE) && 
-                <div> { JSON.stringify(this.state) } </div>
-            }</div></>
+            <section style={{ display: "flex", flexDirection: "column", height: '100px', "margin": "2%", "textAlign": "center"}} key={"aluifghsal"} >
+                <div>{
+                    this.isVisible(this.props.currentFilter.PET_FRIENDLY, this.props.currentFilter.POOL, this.props.currentFilter.READY_TO_LIVE) &&
+                    <div> {JSON.stringify({ price: this.state.price })} </div>
+                }</div>
+                <div>{
+                    this.isVisible(this.props.currentFilter.PET_FRIENDLY, this.props.currentFilter.POOL, this.props.currentFilter.READY_TO_LIVE) &&
+                    <img src={require('./house.png')} width={50} height={50} />
+                }</div>
+            </section>
         )
     }
 }

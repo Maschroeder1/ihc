@@ -18,16 +18,18 @@ export default class ApiRequest extends React.Component {
     }
 
     mockApiReturn(request) {
-        return [
-            this.mockApiReturnItemWith(1, true, true, true, request),
-            this.mockApiReturnItemWith(2, true, true, false, request),
-            this.mockApiReturnItemWith(3, true, false, true, request),
-            this.mockApiReturnItemWith(4, true, false, false, request),
-            this.mockApiReturnItemWith(5, false, true, true, request),
-            this.mockApiReturnItemWith(6, false, true, false, request),
-            this.mockApiReturnItemWith(7, false, false, true, request),
-            this.mockApiReturnItemWith(8, false, false, false, request)
-        ]
+        return (
+            <section style={{ display: "flex", flexDirection: "row", height: '100px', "margin": "2%", "textAlign": "center"}} key={"aluifghsal"} >
+            { [this.mockApiReturnItemWith(1, true, true, true, request), 
+                this.mockApiReturnItemWith(2, true, true, false, request), 
+                this.mockApiReturnItemWith(3, true, false, true, request), 
+                this.mockApiReturnItemWith(4, true, false, false, request), 
+                this.mockApiReturnItemWith(5, false, true, true, request), 
+                this.mockApiReturnItemWith(6, false, true, false, request), 
+                this.mockApiReturnItemWith(7, false, false, true, request), 
+                this.mockApiReturnItemWith(8, false, false, false, request)] }
+            </section>
+        )
     }
 
     requestApi(request) {
