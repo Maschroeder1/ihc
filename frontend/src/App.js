@@ -38,6 +38,11 @@ class App extends Component {
         lastClickUpdatedSelected = true
     }
 
+    if (filterName === "") {
+      this.setState({ lastSelected: lastSelected, lastClickUpdatedSelected: lastClickUpdatedSelected })
+      return
+    }
+
     let apiRequestCopy = {...this.state.apiRequest}
     let enumFilters = apiRequestCopy[filterName]
     if (enumFilters === undefined) {

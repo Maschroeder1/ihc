@@ -12,7 +12,8 @@ export default class TieredButtonController extends React.Component {
             buttons: this.asButtons(props.buttons),
             visibleChildren: [],
             mustBeInFilters: [],
-            mustNotBeInFilters: []
+            mustNotBeInFilters: [],
+            showSkipButton: true
         }
     }
 
@@ -33,6 +34,12 @@ export default class TieredButtonController extends React.Component {
 
     // more spaghetti than an italian restaurant
     somethingFilterFunction = (arg1, arg2) => {
+        if (arg1 === "") {
+            this.setState({ showSkipButton: false })
+            this.state.parentStateFunction(this.state.id, "", [], [])
+            return
+        }
+
         if (arg2 !== null) {
             this.modifyVisibleChildren(arg1, arg2)
         } else {
@@ -56,7 +63,7 @@ export default class TieredButtonController extends React.Component {
         mustNotBeInFilters.push(...FILTER_MUST_BE_REMOVED)
         mustNotBeInFilters = mustNotBeInFilters.filter((filter) => !FILTER_MUST_BE_ADDED.includes(filter))
 
-        this.setState({ visibleChildren: visibleChildren, mustBeInFilters: mustBeInFilters, mustNotBeInFilters: mustNotBeInFilters })
+        this.setState({ visibleChildren: visibleChildren, mustBeInFilters: mustBeInFilters, mustNotBeInFilters: mustNotBeInFilters, showSkipButton: false })
         this.state.parentStateFunction(this.state.id, this.state.filterName, mustBeInFilters, mustNotBeInFilters)
     }
 
@@ -76,7 +83,7 @@ export default class TieredButtonController extends React.Component {
             mustNotBeInFilters = mustNotBeInFilters.filter((filter) => filter !== filterName)
         }
 
-        this.setState({ mustBeInFilters: mustBeInFilters, mustNotBeInFilters: mustNotBeInFilters})
+        this.setState({ mustBeInFilters: mustBeInFilters, mustNotBeInFilters: mustNotBeInFilters, showSkipButton: false})
         this.state.parentStateFunction(this.state.id, this.state.filterName, mustBeInFilters, mustNotBeInFilters)
     }
 
@@ -88,6 +95,9 @@ export default class TieredButtonController extends React.Component {
             }
             {this.isVisible() &&
                 <div> { this.gridItems(this.state.visibleChildren, '100px') } </div>
+            }
+            {(this.isVisible() && this.state.showSkipButton) &&
+                <div> { this.gridItems(this.asButtons([{text:"skip", filterName:"", children:[]}]), '100px')} </div>
             }
             </>
         )

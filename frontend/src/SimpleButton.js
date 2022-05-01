@@ -7,7 +7,6 @@ export default class SimpleButton extends React.Component {
             text: props.text, 
             id: props.id, 
             filterName: props.filterName,
-            wasClicked: false, 
             selected: null, 
             parentStateFunction: props.parentStateFunction, 
             apiRequest: props.apiRequest
@@ -31,10 +30,7 @@ export default class SimpleButton extends React.Component {
     }
 
     click(selectedValue) {
-        this.setState({
-            wasClicked: true,
-            selected: selectedValue
-        })
+        this.setState({ selected: selectedValue })
         this.state.parentStateFunction(this.state.id, selectedValue, this.state.filterName)
     }
 
@@ -45,9 +41,9 @@ export default class SimpleButton extends React.Component {
                     {this.isVisible() &&
                         <section style={{ height: '600px' }}>
                             <div style={{ "textAlign": "center", "marginBottom": "1%" }}> {this.state.text} </div>
+                            { this.button("#efadff", "#cd00ff", 'DOES NOT MATTER') }
                             { this.button("#b3ffc8", "#00ff46", 'YES') }
                             { this.button("#ff7a8c", "#ff0023", 'NO') }
-                            { this.button("#efadff", "#cd00ff", 'DOES NOT MATTER') }
                         </section>
                     }
                 </div>

@@ -21,7 +21,7 @@ export default class TieredButtonButton extends React.Component {
     }
 
     isParent() {
-        return this.state.children.length > 0
+        return this.state.children.length > 0 || this.state.filterName === ""
     }
 
     flipAllChildren() {
