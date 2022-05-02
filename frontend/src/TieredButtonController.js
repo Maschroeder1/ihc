@@ -89,17 +89,13 @@ export default class TieredButtonController extends React.Component {
 
     render() {
         return (
-            <>
-            {this.isVisible() &&
+            this.isVisible() &&
+            <div>
                 <div> { this.gridItems(this.state.buttons, '200px') } </div>
-            }
-            {this.isVisible() &&
                 <div> { this.gridItems(this.state.visibleChildren, '100px') } </div>
-            }
-            {(this.isVisible() && this.state.showSkipButton) &&
-                <div> { this.gridItems(this.asButtons([{text:"skip", filterName:"", children:[]}]), '100px')} </div>
-            }
-            </>
+                {this.state.showSkipButton &&
+                    <div> { this.gridItems(this.asButtons([{text:"skip", filterName:"", children:[]}]), '100px')} </div>}
+            </div>
         )
     }
 

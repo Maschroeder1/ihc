@@ -52,7 +52,11 @@ class App extends Component {
     enumFilters.push(...mustBeInFilters)
     enumFilters = [...new Set(enumFilters)].filter((a) => !mustNotBeInFilters.includes(a))
 
-    apiRequestCopy[filterName] = enumFilters
+    if (enumFilters.length === 0) {
+      delete apiRequestCopy[filterName]
+    } else {
+      apiRequestCopy[filterName] = enumFilters
+    }
 
     this.setState({ lastSelected: lastSelected, apiRequest: apiRequestCopy, lastClickUpdatedSelected: lastClickUpdatedSelected })
   }

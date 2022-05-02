@@ -34,21 +34,18 @@ export default class RentalItem extends React.Component {
     }
 
     render() {
-        return (<section style={{ display: "flex", flexDirection: "column", height: '150px', "margin": "1%", "textAlign": "center"}} key={"aluifghsal"} >
-                    <a onClick={() => this.click()} style={{background:'rgba(102, 102, 102, 0.1)', padding:'5px'}} onMouseOver={event => event.target.style.cursor='pointer'}>
-                        <div>{
-                            this.isVisible(this.props.currentFilter.PET_FRIENDLY, this.props.currentFilter.POOL, this.props.currentFilter.READY_TO_LIVE) &&
-                            <div> price: R$ {this.state.price} </div>
-                        }</div>
-                        <div>{
-                            this.isVisible(this.props.currentFilter.PET_FRIENDLY, this.props.currentFilter.POOL, this.props.currentFilter.READY_TO_LIVE) &&
-                            <img src={require('./house.png')} width={100} height={100} />
-                        }</div>
-                        <div>{
-                            this.state.isSelected &&
-                            <div style={{background:'green'}}>Selected</div>
-                        }</div>
-                    </a>
-                </section>)
+        return (this.isVisible(this.props.currentFilter.PET_FRIENDLY, this.props.currentFilter.POOL, this.props.currentFilter.READY_TO_LIVE) &&
+            <section style={{ display: "flex", flexDirection: "column", height: '150px', "margin": "1%", "textAlign": "center" }} key={"aluifghsal"} >
+                <a onClick={() => this.click()}
+                    style={{ background: 'rgba(102, 102, 102, 0.1)', padding: '5px' }}
+                    onMouseOver={event => event.target.style.cursor = 'pointer'}>
+                    <div> price: R$ {this.state.price} </div>
+                    <img src={require('./house.png')} width={100} height={100} />
+                    <div>{
+                        this.state.isSelected &&
+                        <div style={{ background: 'green' }}>Selected</div>
+                    }</div>
+                </a>
+            </section>)
     }
 }
