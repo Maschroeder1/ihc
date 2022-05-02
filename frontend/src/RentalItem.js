@@ -7,7 +7,8 @@ export default class RentalItem extends React.Component {
             price: props.price,
             isPetFriendly: props.isPetFriendly,
             hasPool: props.hasPool,
-            readyToLive: props.readyToLive
+            readyToLive: props.readyToLive,
+            isSelected: false
         }
     }
 
@@ -28,18 +29,26 @@ export default class RentalItem extends React.Component {
         return d
     }
 
+    click() {
+        this.setState({ isSelected: !this.state.isSelected })
+    }
+
     render() {
-        return (
-            <section style={{ display: "flex", flexDirection: "column", height: '100px', "margin": "2%", "textAlign": "center"}} key={"aluifghsal"} >
-                <div>{
-                    this.isVisible(this.props.currentFilter.PET_FRIENDLY, this.props.currentFilter.POOL, this.props.currentFilter.READY_TO_LIVE) &&
-                    <div> {JSON.stringify({ price: this.state.price })} </div>
-                }</div>
-                <div>{
-                    this.isVisible(this.props.currentFilter.PET_FRIENDLY, this.props.currentFilter.POOL, this.props.currentFilter.READY_TO_LIVE) &&
-                    <img src={require('./house.png')} width={50} height={50} />
-                }</div>
-            </section>
-        )
+        return (<section style={{ display: "flex", flexDirection: "column", height: '150px', "margin": "1%", "textAlign": "center"}} key={"aluifghsal"} >
+                    <a onClick={() => this.click()} style={{background:'rgba(102, 102, 102, 0.1)', padding:'5px'}} onMouseOver={event => event.target.style.cursor='pointer'}>
+                        <div>{
+                            this.isVisible(this.props.currentFilter.PET_FRIENDLY, this.props.currentFilter.POOL, this.props.currentFilter.READY_TO_LIVE) &&
+                            <div> price: R$ {this.state.price} </div>
+                        }</div>
+                        <div>{
+                            this.isVisible(this.props.currentFilter.PET_FRIENDLY, this.props.currentFilter.POOL, this.props.currentFilter.READY_TO_LIVE) &&
+                            <img src={require('./house.png')} width={100} height={100} />
+                        }</div>
+                        <div>{
+                            this.state.isSelected &&
+                            <div style={{background:'green'}}>Selected</div>
+                        }</div>
+                    </a>
+                </section>)
     }
 }
