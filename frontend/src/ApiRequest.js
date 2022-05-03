@@ -1,9 +1,11 @@
-import React from "react"
+import React, { Component } from "react"
 import RentalItem from "./RentalItem"
+import SelectedRentalItemController from "./SelectedRentalItem"
 
 export default class ApiRequest extends React.Component {
     constructor(props) {
         super(props)
+        this.state = { selectedItems: [] }
     }
 
     mockApiReturnItemWith(price, isPetFriendly, hasPool, readyToLive, currentFilter) {
@@ -14,6 +16,7 @@ export default class ApiRequest extends React.Component {
             readyToLive={readyToLive}
             currentFilter={currentFilter}
             key={price}
+            parentFlipFunction={this.flipItem}
         />
     }
 
@@ -36,6 +39,28 @@ export default class ApiRequest extends React.Component {
         return this.mockApiReturn(request)
     }
 
+    flipItem = (item) => {
+        console.log(item)
+        console.log(this.state)
+        let newSelectedItems = this.state.selectedItems
+        let i
+        
+        for (i = 0; i < this.state.selectedItems.length; i++) {
+            if (newSelectedItems[i]['price'] === item['price']) {
+                break;
+            }
+        }
+
+        if (i >= newSelectedItems.length) {
+            console.log("add")
+            this.setState({selectedItems: [...newSelectedItems, item]})
+        } else {
+            console.log("remove")
+            newSelectedItems.splice(i, 1)
+            this.setState({selectedItems: newSelectedItems})
+        }
+    }
+
     render() {
         let items = this.requestApi(this.props.apiRequest)
 
@@ -43,6 +68,8 @@ export default class ApiRequest extends React.Component {
             <div>{JSON.stringify(this.props.apiRequest)}</div>
             <div> --- results below ---</div>
             { [items] }
+            <div> --- selected items below ---</div>
+            <div> <SelectedRentalItemController items={this.state.selectedItems} /></div>
         </>)
     }
 }

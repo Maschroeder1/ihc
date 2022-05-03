@@ -39,9 +39,9 @@ export default class SimpleButton extends React.Component {
             {this.isVisible() &&
                 <section style={{ height: '600px' }}>
                     <div style={{ "textAlign": "center", "marginBottom": "1%" }}> {this.state.text} </div>
-                    {this.button("#efadff", "#cd00ff", 'DOES NOT MATTER')}
                     {this.button("#b3ffc8", "#00ff46", 'YES')}
                     {this.button("#ff7a8c", "#ff0023", 'NO')}
+                    {this.button("#efadff", "#cd00ff", 'DOES NOT MATTER')}
                 </section>
             }
         </div>)

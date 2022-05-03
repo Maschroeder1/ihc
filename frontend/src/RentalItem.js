@@ -13,11 +13,7 @@ export default class RentalItem extends React.Component {
     }
 
     matches(expected, actual) {
-        if (expected === undefined) {
-            return true
-        }
-
-        return expected === actual
+        return expected === undefined || expected === actual
     }
 
     isVisible(isPetFriendly, hasPool, readyToLive) {
@@ -31,6 +27,7 @@ export default class RentalItem extends React.Component {
 
     click() {
         this.setState({ isSelected: !this.state.isSelected })
+        this.props.parentFlipFunction(this.state)
     }
 
     render() {
