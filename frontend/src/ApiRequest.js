@@ -40,8 +40,6 @@ export default class ApiRequest extends React.Component {
     }
 
     flipItem = (item) => {
-        console.log(item)
-        console.log(this.state)
         let newSelectedItems = this.state.selectedItems
         let i
         
@@ -52,10 +50,8 @@ export default class ApiRequest extends React.Component {
         }
 
         if (i >= newSelectedItems.length) {
-            console.log("add")
             this.setState({selectedItems: [...newSelectedItems, item]})
         } else {
-            console.log("remove")
             newSelectedItems.splice(i, 1)
             this.setState({selectedItems: newSelectedItems})
         }
