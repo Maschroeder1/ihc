@@ -1,6 +1,6 @@
 import React, { Component } from "react"
 import RentalItem from "./RentalItem"
-import SelectedRentalItemController from "./SelectedRentalItem"
+import SelectedRentalItemController from "./SelectedRentalItemController"
 
 export default class ApiRequest extends React.Component {
     constructor(props) {
