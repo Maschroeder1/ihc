@@ -7,6 +7,7 @@ const Slider = ({ min, max, text, filterName, id, renameAttempt }) => {
     const [minVal, setMinVal] = useState(min);
     const [maxVal, setMaxVal] = useState(max);
     const [useCount, setUseCount] = useState(0);
+    const [showSkipButton, setShowSkipButton] = useState(true)
     const _text = text
     const _filter_name = filterName
     const innerId = id
@@ -47,51 +48,59 @@ const Slider = ({ min, max, text, filterName, id, renameAttempt }) => {
 
     // Get min and max values when their state changes
     useEffect(() => {
-        const timer = setTimeout(() => renameAttempt(minVal == min ? -1 : minVal, maxVal == max ? -1 : maxVal, useCount < 2 ? -1 : innerId, _filter_name), 500)
-        setUseCount(useCount+1)
+        const firstUse = useCount < 2
+        const timer = setTimeout(() => renameAttempt(minVal == min ? -1 : minVal, maxVal == max ? -1 : maxVal, firstUse ? -1 : innerId, _filter_name), 500)
+        if (!firstUse) {
+            setShowSkipButton(false)
+        }
+        setUseCount(useCount + 1)
         return () => clearTimeout(timer)
     }, [minVal, maxVal, renameAttempt]);
 
     return (
         <>
-        <div style={{"textAlign": "center", 'marginBottom': '1%'}}>{_text}</div>
-        <div className="container">
-            <input
-                type="range"
-                min={min}
-                max={max}
-                value={minVal}
-                ref={minValRef}
-                onChange={(event) => {
-                    const value = Math.min(+event.target.value, maxVal - 1);
-                    setMinVal(value);
-                    event.target.value = value.toString();
-                }}
-                className={classnames("thumb thumb--zindex-3", {
-                    "thumb--zindex-5": minVal > max - 100
-                })}
-            />
-            <input
-                type="range"
-                min={min}
-                max={max}
-                value={maxVal}
-                ref={maxValRef}
-                onChange={(event) => {
-                    const value = Math.max(+event.target.value, minVal + 1);
-                    setMaxVal(value);
-                    event.target.value = value.toString();
-                }}
-                className="thumb thumb--zindex-4"
-            />
+            <div style={{ "textAlign": "center", 'marginBottom': '1%' }}>{_text}</div>
+            <div className="container">
+                <input
+                    type="range"
+                    min={min}
+                    max={max}
+                    value={minVal}
+                    ref={minValRef}
+                    onChange={(event) => {
+                        const value = Math.min(+event.target.value, maxVal - 1);
+                        setMinVal(value);
+                        event.target.value = value.toString();
+                    }}
+                    className={classnames("thumb thumb--zindex-3", {
+                        "thumb--zindex-5": minVal > max - 100
+                    })}
+                />
+                <input
+                    type="range"
+                    min={min}
+                    max={max}
+                    value={maxVal}
+                    ref={maxValRef}
+                    onChange={(event) => {
+                        const value = Math.max(+event.target.value, minVal + 1);
+                        setMaxVal(value);
+                        event.target.value = value.toString();
+                    }}
+                    className="thumb thumb--zindex-4"
+                />
 
-            <div className="slider">
-                <div className="slider__track" />
-                <div ref={range} className="slider__range" />
-                <div className="slider__left-value">{minVal}</div>
-                <div className="slider__right-value">{maxVal}</div>
+                <div className="slider">
+                    <div className="slider__track" />
+                    <div ref={range} className="slider__range" />
+                    <div className="slider__left-value">{minVal}</div>
+                    <div className="slider__right-value">{maxVal}</div>
+                </div>
             </div>
-        </div>
+            {showSkipButton &&
+                <div style={{ "textAlign": "center" }}>
+                    <button onClick={() => {setShowSkipButton(false); renameAttempt(-1, -1, innerId, _filter_name)}} style={{ "background": '#9fe5e1', "height": "80px", "width": "10%" }}>Skip</button>
+                </div>}
         </>
     );
 };
