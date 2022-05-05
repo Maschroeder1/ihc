@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import SimpleButton from './SimpleButton'
 import ApiRequest from './ApiRequest'
 import TieredButtonController from './TieredButtonController'
+import Slider from './SliderFunction'
 
 class App extends Component {
   messagesEndRef = React.createRef()
@@ -61,6 +62,30 @@ class App extends Component {
     this.setState({ lastSelected: lastSelected, apiRequest: apiRequestCopy, lastClickUpdatedSelected: lastClickUpdatedSelected })
   }
 
+  sliderFunction = (min, max, innerIndex, filter_name) => {
+    let lastSelected = this.state.lastSelected
+    let lastClickUpdatedSelected = false
+    if (innerIndex >= lastSelected) {
+      lastSelected = innerIndex + 1
+      lastClickUpdatedSelected = true
+  }
+
+  let currentFilter = {}
+  let apiRequestCopy = {...this.state.apiRequest}
+  if (min === -1 && max === -1) {
+    delete apiRequestCopy[filter_name]
+  } else {
+    if (min !== -1) {
+      currentFilter['min'] = min
+    }
+    if (max !== -1) {
+      currentFilter['max'] = max
+    }
+    apiRequestCopy[filter_name] = currentFilter
+}
+  this.setState({ lastSelected: lastSelected, lastClickUpdatedSelected: lastClickUpdatedSelected, apiRequest: apiRequestCopy })
+  }
+
   componentDidUpdate () {
     if (this.state.lastClickUpdatedSelected) {
       this.messagesEndRef.current.scrollIntoView({ behavior: 'smooth' })
@@ -74,10 +99,13 @@ class App extends Component {
       {text:"button 3", filterName:"ANY3", children:[{text:"child 5", filterName:"CHILD_5"}, {text:"child 6", filterName:"CHILD_6"}]},
       {text:"button 4", filterName:"ANY4", children:[{text:"child 7", filterName:"CHILD_7"}, {text:"child 8", filterName:"CHILD_8"}]}]
     let buttons = [
-      <SimpleButton text="Ready to live?" filterName="READY_TO_LIVE" id={0} key={0} parentStateFunction={this.simpleButtonFunction} parentId={this.state.lastSelected} updateStateJSON={this.updateStateJSON} buttons={[1, 2]} />,
-      <TieredButtonController text="Ready to live?" filterName="HOUSE_TYPE" id={1} key={1} parentStateFunction={this.tieredButtonFunction} parentId={this.state.lastSelected} updateStateJSON={this.updateStateJSON} buttons={tieredButtons1} />,
-      <SimpleButton text="Pet friendly?" filterName="PET_FRIENDLY" id={2} key={2} parentStateFunction={this.simpleButtonFunction} parentId={this.state.lastSelected} updateStateJSON={this.updateStateJSON} />,
-      <SimpleButton text="Has a pool?" filterName="POOL" id={3} key={3} parentStateFunction={this.simpleButtonFunction} parentId={this.state.lastSelected} updateStateJSON={this.updateStateJSON} />,
+      // <Slider min={0} max={1000} question={'Prince range?'} renameAttempt={({ min, max }) => {console.log(`min = ${min}, max = ${max}`)}} key={-1} />,
+      <Slider text={'Prince range?'} filterName={'TOTAL_PRICE_RANGE'} id={0} key={-1} min={0} max={1000} renameAttempt={this.sliderFunction}  />,
+      //<Slider min={0} max={1000} onChange={this.sliderFunction} key={-1} />,
+      <SimpleButton text="Ready to live?" filterName="READY_TO_LIVE" id={1} key={0} parentStateFunction={this.simpleButtonFunction} parentId={this.state.lastSelected} updateStateJSON={this.updateStateJSON} buttons={[1, 2]} />,
+      <TieredButtonController text="Ready to live?" filterName="HOUSE_TYPE" id={2} key={1} parentStateFunction={this.tieredButtonFunction} parentId={this.state.lastSelected} updateStateJSON={this.updateStateJSON} buttons={tieredButtons1} />,
+      <SimpleButton text="Pet friendly?" filterName="PET_FRIENDLY" id={3} key={2} parentStateFunction={this.simpleButtonFunction} parentId={this.state.lastSelected} updateStateJSON={this.updateStateJSON} />,
+      <SimpleButton text="Has a pool?" filterName="POOL" id={4} key={3} parentStateFunction={this.simpleButtonFunction} parentId={this.state.lastSelected} updateStateJSON={this.updateStateJSON} />,
       //<TieredButtonController text="Ready to live?" filterName="ENUM_2" id={4} key={4} parentStateFunction={this.tieredButtonFunction} parentId={this.state.lastSelected} updateStateJSON={this.updateStateJSON} buttons={[3, 4]} />
     ]
 

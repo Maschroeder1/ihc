@@ -1,6 +1,11 @@
 import React, { Component } from "react"
 
 export default class SelectedRentalItemController extends React.Component {
+    constructor(props) {
+        super(props)
+        this.state = {'loading': false}
+    }
+
     translateKey(key) {
         let price = 'price'
         let hasPool = 'hasPool'
@@ -50,7 +55,7 @@ export default class SelectedRentalItemController extends React.Component {
     }
 
     render() {
-        
+        let timeout
         return ['price', 'hasPool', 'isPetFriendly', 'readyToLive'].map(key => this.render_items_based_on(key))
     }
 }
