@@ -3,7 +3,7 @@ import classnames from "classnames";
 import PropTypes from "prop-types";
 import "./slider.css";
 
-const Slider = ({ min, max, text, filterName, id, renameAttempt }) => {
+const Slider = ({ min, max, text, filterName, id, renameAttempt, parentId }) => {
     const [minVal, setMinVal] = useState(min);
     const [maxVal, setMaxVal] = useState(max);
     const [useCount, setUseCount] = useState(0);
@@ -49,17 +49,21 @@ const Slider = ({ min, max, text, filterName, id, renameAttempt }) => {
     // Get min and max values when their state changes
     useEffect(() => {
         const firstUse = useCount < 2
-        const timer = setTimeout(() => renameAttempt(minVal == min ? -1 : minVal, maxVal == max ? -1 : maxVal, firstUse ? -1 : innerId, _filter_name), 500)
-        if (!firstUse) {
-            setShowSkipButton(false)
-        }
+        const timer = setTimeout(() => {
+            renameAttempt(minVal == min ? -1 : minVal, maxVal == max ? -1 : maxVal, firstUse ? -1 : innerId, _filter_name)
+            if (!firstUse) {
+                setShowSkipButton(false)
+            }
+        }, 500)
+
         setUseCount(useCount + 1)
         return () => clearTimeout(timer)
     }, [minVal, maxVal, renameAttempt]);
 
     return (
-        <>
-            <div style={{ "textAlign": "center", 'marginBottom': '1%' }}>{_text}</div>
+        <div style={{'marginBottom': '10%'}}> { parentId >= innerId &&
+        <div> 
+            <div style={{ "textAlign": "center", 'marginBottom': '1%', "fontSize": "25px" }}>{_text}</div>
             <div className="container">
                 <input
                     type="range"
@@ -93,15 +97,16 @@ const Slider = ({ min, max, text, filterName, id, renameAttempt }) => {
                 <div className="slider">
                     <div className="slider__track" />
                     <div ref={range} className="slider__range" />
-                    <div className="slider__left-value">{minVal}</div>
-                    <div className="slider__right-value">{maxVal}</div>
+                    <div className="slider__left-value">{minVal === min ? "Sem mínimo" : minVal}</div>
+                    <div className="slider__right-value">{maxVal === max ? "Sem máximo" : maxVal}</div>
                 </div>
             </div>
             {showSkipButton &&
                 <div style={{ "textAlign": "center" }}>
-                    <button onClick={() => {setShowSkipButton(false); renameAttempt(-1, -1, innerId, _filter_name)}} style={{ "background": '#9fe5e1', "height": "80px", "width": "10%" }}>Skip</button>
+                    <button onClick={() => {setShowSkipButton(false); renameAttempt(-1, -1, innerId, _filter_name)}} style={{ "background": '#9fe5e1', "height": "80px", "width": "10%", 'fontSize': '18px' }}>Skip</button>
                 </div>}
-        </>
+        </div>
+        }</div>
     );
 };
 

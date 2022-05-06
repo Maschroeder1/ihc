@@ -22,14 +22,14 @@ export default class TieredButtonController extends React.Component {
             return []
         }
 
-        return buttonObjects.map((buttonObject) => 
+        return buttonObjects.map((buttonObject) =>
             <TieredButtonButton
                 text={buttonObject.text}
                 filterName={buttonObject.filterName}
                 key={buttonObject.filterName}
                 children={this.asButtons(buttonObject.children)}
                 parentVisibleFunction={this.somethingFilterFunction}
-                />)
+            />)
     }
 
     // more spaghetti than an italian restaurant
@@ -83,20 +83,24 @@ export default class TieredButtonController extends React.Component {
             mustNotBeInFilters = mustNotBeInFilters.filter((filter) => filter !== filterName)
         }
 
-        this.setState({ mustBeInFilters: mustBeInFilters, mustNotBeInFilters: mustNotBeInFilters, showSkipButton: false})
+        this.setState({ mustBeInFilters: mustBeInFilters, mustNotBeInFilters: mustNotBeInFilters, showSkipButton: false })
         this.state.parentStateFunction(this.state.id, this.state.filterName, mustBeInFilters, mustNotBeInFilters)
     }
 
     render() {
         return (
             this.isVisible() &&
-            <div>
-                <div> { this.gridItems(this.state.buttons, '200px') } </div>
-                <div> { this.gridItems(this.state.visibleChildren, '100px') } </div>
-                {this.state.showSkipButton &&
-                    <div> { this.gridItems(this.asButtons([{text:"skip", filterName:"", children:[]}]), '100px')} </div>}
-            </div>
-        )
+            <div style={{'marginBottom': "10%"}}>
+                <div style={{ "textAlign": "center", "marginBottom": "1%", "fontSize": "25px" }}>
+                    {this.state.text}
+                </div>
+                <div>
+                    <div> {this.gridItems(this.state.buttons, '200px')} </div>
+                    <div> {this.gridItems(this.state.visibleChildren, '100px')} </div>
+                    {this.state.showSkipButton &&
+                        <div> {this.gridItems(this.asButtons([{ text: "Pular", filterName: "", children: [] }]), '100px')} </div>}
+                </div>
+            </div>)
     }
 
     isVisible() {
@@ -107,9 +111,9 @@ export default class TieredButtonController extends React.Component {
         const MAX_BUTTONS_PER_ROW = 4
         let sections = []
 
-        for (let i=0; i < buttons.length; i += MAX_BUTTONS_PER_ROW) {
-            sections.push(<section style={{ flexDirection: "row", height: height, "margin": "2%", "textAlign": "center"}} key={i}>
-                { buttons.slice(i, i+MAX_BUTTONS_PER_ROW) }
+        for (let i = 0; i < buttons.length; i += MAX_BUTTONS_PER_ROW) {
+            sections.push(<section style={{ flexDirection: "row", height: height, "margin": "1%", "textAlign": "center" }} key={i}>
+                {buttons.slice(i, i + MAX_BUTTONS_PER_ROW)}
             </section>)
         }
 

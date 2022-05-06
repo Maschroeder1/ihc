@@ -93,20 +93,32 @@ class App extends Component {
   }
 
   render() {
-    let tieredButtons1 = [
-      { text: "button 1", filterName: "ANY1", children: [{ text: "child 1", filterName: "CHILD_1" }, { text: "child 2", filterName: "CHILD_2" }] },
-      { text: "button 2", filterName: "ANY2", children: [{ text: "child 3", filterName: "CHILD_3" }, { text: "child 4", filterName: "CHILD_4" }] },
-      { text: "button 3", filterName: "ANY3", children: [{ text: "child 5", filterName: "CHILD_5" }, { text: "child 6", filterName: "CHILD_6" }] },
-      { text: "button 4", filterName: "ANY4", children: [{ text: "child 7", filterName: "CHILD_7" }, { text: "child 8", filterName: "CHILD_8" }] }]
+    let housingTypes = [
+      { text: "Apartamento", filterName: "ANY1", children: [
+        { text: "Tradicional", filterName: "TRADITIONAL" },
+        { text: "JK", filterName: "JK" }, 
+        { text: "Kitnet", filterName: "KITNET" },
+        { text: "Flat", filterName: "FLAT" },
+        { text: "Loft", filterName: "LOFT" },
+        { text: "Studio", filterName: "STUDIO" },
+        { text: "Andar", filterName: "FLOOR" },
+        { text: "Cobertura", filterName: "ROOFTOP" }] },
+      { text: "Casa", filterName: "ANY2", children: [
+        { text: "Casa residencial", filterName: "SINGLE_FAMILY" }, 
+        { text: "Duplex", filterName: "DUPLEX" }, 
+        { text: "Sítio", filterName: "CABIN" }, 
+        { text: "Casa em condomínio", filterName: "HOA" }] }]
     let buttons = [
-      // <Slider min={0} max={1000} question={'Prince range?'} renameAttempt={({ min, max }) => {console.log(`min = ${min}, max = ${max}`)}} key={-1} />,
-      <Slider text={'Prince range?'} filterName={'TOTAL_PRICE_RANGE'} id={0} key={-1} min={0} max={1000} renameAttempt={this.sliderFunction} />,
-      //<Slider min={0} max={1000} onChange={this.sliderFunction} key={-1} />,
-      <SimpleButton text="Ready to live?" filterName="READY_TO_LIVE" id={1} key={0} parentStateFunction={this.simpleButtonFunction} parentId={this.state.lastSelected} updateStateJSON={this.updateStateJSON} buttons={[1, 2]} />,
-      <TieredButtonController text="Ready to live?" filterName="HOUSE_TYPE" id={2} key={1} parentStateFunction={this.tieredButtonFunction} parentId={this.state.lastSelected} updateStateJSON={this.updateStateJSON} buttons={tieredButtons1} />,
-      <SimpleButton text="Pet friendly?" filterName="PET_FRIENDLY" id={3} key={2} parentStateFunction={this.simpleButtonFunction} parentId={this.state.lastSelected} updateStateJSON={this.updateStateJSON} />,
-      <SimpleButton text="Has a pool?" filterName="POOL" id={4} key={3} parentStateFunction={this.simpleButtonFunction} parentId={this.state.lastSelected} updateStateJSON={this.updateStateJSON} />,
-      //<TieredButtonController text="Ready to live?" filterName="ENUM_2" id={4} key={4} parentStateFunction={this.tieredButtonFunction} parentId={this.state.lastSelected} updateStateJSON={this.updateStateJSON} buttons={[3, 4]} />
+      <Slider text={'Faixa de preço?'} filterName={'TOTAL_PRICE_RANGE'} id={0} key={-5} min={1000} max={2000} parentId={this.state.lastSelected} renameAttempt={this.sliderFunction} />,
+      <SimpleButton text="Mobiliado?" filterName="READY_TO_LIVE" id={1} key={-3} parentStateFunction={this.simpleButtonFunction} parentId={this.state.lastSelected} updateStateJSON={this.updateStateJSON} buttons={[1, 2]} />,
+      <Slider text={'Faixa de preço do condomínio?'} filterName={'FEES_PRICE_RANGE'} id={2} key={-4} min={0} max={200} parentId={this.state.lastSelected} renameAttempt={this.sliderFunction} />,
+      <TieredButtonController text="Apartamento? Casa?" filterName="HOUSE_TYPE" id={3} key={1} parentStateFunction={this.tieredButtonFunction} parentId={this.state.lastSelected} updateStateJSON={this.updateStateJSON} buttons={housingTypes} />,
+      <Slider text={'Número de quartos?'} filterName={'BEDROOM COUNT'} id={4} key={-2} min={0} max={5} parentId={this.state.lastSelected} renameAttempt={this.sliderFunction} />,
+      <SimpleButton text="Com churrasqueira?" filterName="BARBECUE" id={5} key={0} parentStateFunction={this.simpleButtonFunction} parentId={this.state.lastSelected} updateStateJSON={this.updateStateJSON} buttons={[1, 2]} />,
+      <Slider text={'Número de banheiros?'} filterName={'BATHROOM_COUNT'} id={6} key={-1} min={0} max={5} parentId={this.state.lastSelected} renameAttempt={this.sliderFunction} />,
+      <SimpleButton text="Pet friendly?" filterName="PET_FRIENDLY" id={7} key={2} parentStateFunction={this.simpleButtonFunction} parentId={this.state.lastSelected} updateStateJSON={this.updateStateJSON} />,
+      <Slider text={'Número de vagas?'} filterName={'PARKING_SPOTS'} id={8} key={3} min={0} max={5} parentId={this.state.lastSelected} renameAttempt={this.sliderFunction} />,
+      <SimpleButton text="Com piscina?" filterName="POOL" id={9} key={4} parentStateFunction={this.simpleButtonFunction} parentId={this.state.lastSelected} updateStateJSON={this.updateStateJSON} />
     ]
 
     let req = <ApiRequest apiRequest={this.state.apiRequest} />

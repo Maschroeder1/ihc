@@ -23,7 +23,7 @@ export default class SimpleButton extends React.Component {
         return <button
             onMouseOver={event => event.target.style.background = strong_color}
             onMouseOut={event => event.target.style.background = color}
-            style={{ "background": color, "height": "25%", width: "100%", "marginBottom": "2%" }}
+            style={{ "background": color, "height": "25%", width: "100%", "marginBottom": "2%", "fontSize": "18px" }}
             onClick={() => this.click(value)}>
             {value}
         </button>
@@ -38,7 +38,7 @@ export default class SimpleButton extends React.Component {
         return (<div>
             {this.isVisible() &&
                 <section style={{ height: '600px' }}>
-                    <div style={{ "textAlign": "center", "marginBottom": "1%" }}> {this.state.text} </div>
+                    <div style={{ "textAlign": "center", "marginBottom": "1%", "fontSize": "25px" }}> {this.state.text} </div>
                     {this.button("#b3ffc8", "#00ff46", 'YES')}
                     {this.button("#ff7a8c", "#ff0023", 'NO')}
                     {this.button("#efadff", "#cd00ff", 'DOES NOT MATTER')}

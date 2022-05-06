@@ -41,8 +41,8 @@ export default class TieredButtonButton extends React.Component {
     }
 
     render() {
-        const STRONG_COLOR = "#0015ff"
-        const LIGHT_COLOR = "#9ea6ff"
+        const STRONG_COLOR = "#fff500"
+        const LIGHT_COLOR = "#fffb96"
         let currentColor
         let opositeColor
 
@@ -64,7 +64,7 @@ export default class TieredButtonButton extends React.Component {
                     onMouseOver={event => event.target.style.background = opositeColor} 
                     onMouseOut={event => event.target.style.background = currentColor}
                     onClick={() => this.click()} 
-                    style={{ "background": currentColor, "height": "80%", width: "20%", "margin": "2%", "marginRight": "2%" }}>
+                    style={{ "background": currentColor, "height": "80%", width: "20%", "margin": "1%", "marginRight": "2%", "fontSize": "18px" }}>
                 { this.state.text }
             </button>
     }

@@ -55,7 +55,6 @@ export default class SelectedRentalItemController extends React.Component {
     }
 
     render() {
-        let timeout
-        return ['price', 'hasPool', 'isPetFriendly', 'readyToLive'].map(key => this.render_items_based_on(key))
+        return (<>{ this.props.items.length > 0 && ['price', 'hasPool', 'isPetFriendly', 'readyToLive'].map(key => this.render_items_based_on(key)) }</>)
     }
 }
