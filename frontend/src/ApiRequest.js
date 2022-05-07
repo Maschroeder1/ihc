@@ -82,7 +82,7 @@ export default class ApiRequest extends React.Component {
     }
 
     mockApiReturn(request) {
-        return this.generateRandomApartments(200)
+        return this.generateRandomApartments(15)
     }
 
     requestApi(request) {
@@ -111,7 +111,7 @@ export default class ApiRequest extends React.Component {
 
     render() {
         return (<div>
-            <div> <RentalItemVisibilityController items={this.state.items} currentFilter={this.props.apiRequest} traceFun={this.props.traceFun} /> </div>
+            <div> <RentalItemVisibilityController items={this.state.items} currentFilter={this.props.apiRequest} traceFun={this.props.traceFun} scrollAnchor={this.props.scrollAnchor} /> </div>
             <div> <SelectedRentalItemController items={this.state.selectedItems} /></div>
         </div>)
     }

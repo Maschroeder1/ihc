@@ -3,6 +3,9 @@ import React, { Component } from "react"
 export default class RentalItemVisibilityController extends React.Component {
     constructor(props) {
         super(props)
+        this.state = {
+            visibleRows: 0
+        }
     }
 
     enumValuesMatch(item, filter) {
@@ -55,9 +58,38 @@ export default class RentalItemVisibilityController extends React.Component {
         return boolValuesMatch && rangeValuesMatch && enumValuesMatch
     }
 
+    buildOtherRows(items, itemsPerRow, rem, rowNumber) {
+        if (items.length === 0 || rowNumber === this.state.visibleRows) {
+            return
+        }
+
+        let rowItems = items.slice(0, itemsPerRow)
+        let rowRems = rem.repeat(rowItems.length)
+        let nextRows = this.buildOtherRows(items.slice(itemsPerRow+1), itemsPerRow, rem, rowNumber+1)
+
+        return (<>
+            <div key={rowNumber} style={{'display': 'grid', 'gridTemplateColumns': rowRems, 'gridGap': '1rem', 'gridAutoFlow': 'row', 'marginBottom': '1rem'}}>{rowItems}</div>
+            {nextRows}
+        </>)
+    }
+
     render() {
+        const rem = '15rem '
+        const columnsPerRow = 7
         let visibleChildren = this.props.items.filter(item => this.isVisible(item.props, this.props.currentFilter))
-        let rems = '15rem '.repeat(7)
-        return <div style={{'display': 'grid', 'gridTemplateColumns': rems, 'gridGap': '1rem', 'gridAutoFlow': 'row'}}>{visibleChildren}</div>
+        let firstRow = visibleChildren.slice(0,columnsPerRow)
+        let firstRowRems = rem.repeat(firstRow.length)
+        firstRow = <div key='first' style={{'display': 'grid', 'gridTemplateColumns': firstRowRems, 'gridGap': '1rem', 'gridAutoFlow': 'row', 'marginBottom': '1rem'}}>{firstRow}</div>
+
+        
+        return (<>
+            { firstRow }
+            <div key={'ref'} ref={this.props.scrollAnchor} />
+            {this.buildOtherRows(visibleChildren.slice(columnsPerRow+1), columnsPerRow, rem, 0)}
+            <nav style={{ flexDirection: "row", height: '100px', "margin": "1%", "textAlign": "center", justifyContent: 'left' }} key={-9}>
+                <button key={'-'} onClick={() => {let a = this.state.visibleRows - 1; if(a>=0) this.setState({visibleRows: a})}} style={{marginRight: '93%'}}>Mostrar menos</button>
+                <button key={'+'} onClick={() => {let a = this.state.visibleRows + 1; if(a*columnsPerRow<visibleChildren.length) this.setState({visibleRows: a})}} style={{marginLeft: '80%'}}>Mostrar mais</button>
+            </nav>
+        </>)
     }
 }

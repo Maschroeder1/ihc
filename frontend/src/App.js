@@ -97,7 +97,6 @@ class App extends Component {
   }
 
   apiRequestFun = () => {
-    console.log("adsa")
     let newTrace = this.state.trace
     newTrace.push({"time": new Date() - this.state.initialTimestamp, "Filter": "API"})
 
@@ -146,9 +145,7 @@ class App extends Component {
 
     return (<>
       <div>{buttons}</div>
-      <div style={{'fontSize': '30px', 'textAlign': 'center'}}>Resultados abaixo</div>
-      <div className='idk' ref={this.messagesEndRef} />
-      <ApiRequest apiRequest={this.state.apiRequest} traceFun={this.apiRequestFun} />
+      <ApiRequest apiRequest={this.state.apiRequest} traceFun={this.apiRequestFun} scrollAnchor={this.messagesEndRef} />
       <button style={{ "background": '#9fe5e1', "height": "40px", width: "100%", "marginBottom": "2%", "fontSize": "18px", 'marginTop': '20px'}} onClick={() => this.scrollToPlace()}>Voltar para cima</button>
       <button onClick={() => console.log(this.state.trace)}>Finalizar</button>
     </>)
