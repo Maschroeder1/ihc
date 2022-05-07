@@ -86,9 +86,15 @@ class App extends Component {
     this.setState({ lastSelected: lastSelected, lastClickUpdatedSelected: lastClickUpdatedSelected, apiRequest: apiRequestCopy })
   }
 
+  scrollToPlace() {
+    this.messagesEndRef.current.scrollIntoView({ behavior: 'smooth', block: 'end', inline: 'nearest' })
+  }
+
   componentDidUpdate() {
     if (this.state.lastClickUpdatedSelected) {
-      this.messagesEndRef.current.scrollIntoView({ behavior: 'smooth' })
+      setTimeout(() => {
+          this.scrollToPlace()
+      }, 50)
     }
   }
 
@@ -96,11 +102,10 @@ class App extends Component {
     let housingTypes = [
       { text: "Apartamento", filterName: "ANY1", children: [
         { text: "Tradicional", filterName: "TRADITIONAL" },
-        { text: "JK", filterName: "JK" }, 
+        { text: "JK/Studio", filterName: "STUDIO" }, 
         { text: "Kitnet", filterName: "KITNET" },
         { text: "Flat", filterName: "FLAT" },
         { text: "Loft", filterName: "LOFT" },
-        { text: "Studio", filterName: "STUDIO" },
         { text: "Andar", filterName: "FLOOR" },
         { text: "Cobertura", filterName: "ROOFTOP" }] },
       { text: "Casa", filterName: "ANY2", children: [
@@ -109,9 +114,9 @@ class App extends Component {
         { text: "Sítio", filterName: "CABIN" }, 
         { text: "Casa em condomínio", filterName: "HOA" }] }]
     let buttons = [
-      <Slider text={'Faixa de preço?'} filterName={'TOTAL_PRICE_RANGE'} id={0} key={-5} min={1000} max={2000} parentId={this.state.lastSelected} renameAttempt={this.sliderFunction} />,
+      <Slider text={'Faixa de preço do aluguel?'} filterName={'TOTAL_PRICE_RANGE'} id={0} key={-5} min={1000} max={10000} parentId={this.state.lastSelected} renameAttempt={this.sliderFunction} />,
       <SimpleButton text="Mobiliado?" filterName="READY_TO_LIVE" id={1} key={-3} parentStateFunction={this.simpleButtonFunction} parentId={this.state.lastSelected} updateStateJSON={this.updateStateJSON} buttons={[1, 2]} />,
-      <Slider text={'Faixa de preço do condomínio?'} filterName={'FEES_PRICE_RANGE'} id={2} key={-4} min={0} max={200} parentId={this.state.lastSelected} renameAttempt={this.sliderFunction} />,
+      <Slider text={'Faixa de preço de taxas como condomínio, gás, etc.?'} filterName={'FEES_PRICE_RANGE'} id={2} key={-4} min={0} max={2000} parentId={this.state.lastSelected} renameAttempt={this.sliderFunction} />,
       <TieredButtonController text="Apartamento? Casa?" filterName="HOUSE_TYPE" id={3} key={1} parentStateFunction={this.tieredButtonFunction} parentId={this.state.lastSelected} updateStateJSON={this.updateStateJSON} buttons={housingTypes} />,
       <Slider text={'Número de quartos?'} filterName={'BEDROOM COUNT'} id={4} key={-2} min={0} max={5} parentId={this.state.lastSelected} renameAttempt={this.sliderFunction} />,
       <SimpleButton text="Com churrasqueira?" filterName="BARBECUE" id={5} key={0} parentStateFunction={this.simpleButtonFunction} parentId={this.state.lastSelected} updateStateJSON={this.updateStateJSON} buttons={[1, 2]} />,
@@ -121,12 +126,12 @@ class App extends Component {
       <SimpleButton text="Com piscina?" filterName="POOL" id={9} key={4} parentStateFunction={this.simpleButtonFunction} parentId={this.state.lastSelected} updateStateJSON={this.updateStateJSON} />
     ]
 
-    let req = <ApiRequest apiRequest={this.state.apiRequest} />
-
     return (<>
       <div>{buttons}</div>
-      <div ref={this.messagesEndRef} />
-      <div>{req}</div>
+      <div style={{'fontSize': '30px', 'textAlign': 'center'}}>Resultados abaixo</div>
+      <div className='idk' ref={this.messagesEndRef} />
+      <ApiRequest apiRequest={this.state.apiRequest} />
+      <button style={{ "background": '#9fe5e1', "height": "40px", width: "100%", "marginBottom": "2%", "fontSize": "18px", 'marginTop': '20px'}} onClick={() => this.scrollToPlace()}>Voltar para cima</button>
     </>)
   }
 }

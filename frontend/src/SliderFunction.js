@@ -48,7 +48,7 @@ const Slider = ({ min, max, text, filterName, id, renameAttempt, parentId }) => 
 
     // Get min and max values when their state changes
     useEffect(() => {
-        const firstUse = useCount < 2
+        const firstUse = useCount < 1
         const timer = setTimeout(() => {
             renameAttempt(minVal == min ? -1 : minVal, maxVal == max ? -1 : maxVal, firstUse ? -1 : innerId, _filter_name)
             if (!firstUse) {

@@ -7,16 +7,28 @@ export default class SelectedRentalItemController extends React.Component {
     }
 
     translateKey(key) {
+        let type = 'type'
         let price = 'price'
+        let fees = 'fees'
+        let bedrooms = 'bedrooms'
+        let bathrooms = 'bathrooms'
+        let parkingSpots = 'parkingSpots'
         let hasPool = 'hasPool'
+        let hasBarbecue = 'hasBarbecue'
         let isPetFriendly = 'isPetFriendly'
         let readyToLive = 'readyToLive'
         let longestLen = 'Ready to live:'.length
         switch(key) {
-            case price: return 'Price:' + '\u00A0'.repeat(longestLen - price.length)
-            case hasPool: return 'Has a pool:' + '\u00A0'.repeat(longestLen - hasPool.length -1)
+            case type: return 'Tipo:' + '\u00A0'.repeat(longestLen - type.length)
+            case price: return 'Preço:' + '\u00A0'.repeat(longestLen - price.length)
+            case fees: return 'Taxas:' + '\u00A0'.repeat(longestLen - fees.length)
+            case bedrooms: return 'Quartos:' + '\u00A0'.repeat(longestLen - bedrooms.length)
+            case bathrooms: return 'Banheiros:' + '\u00A0'.repeat(longestLen - bathrooms.length)
+            case parkingSpots: return 'Vagas:' + '\u00A0'.repeat(longestLen - parkingSpots.length)
+            case hasPool: return 'Tem piscina:' + '\u00A0'.repeat(longestLen - hasPool.length -1)
+            case hasBarbecue: return 'Tem Churrasqueira:' + '\u00A0'.repeat(longestLen - hasBarbecue.length -1)
             case isPetFriendly: return 'Pet friendly:' + '\u00A0'.repeat(longestLen - isPetFriendly.length + 4)
-            case readyToLive: return 'Ready to live:' + '\u00A0'.repeat(longestLen - readyToLive.length)
+            case readyToLive: return 'Pronto para morar:' + '\u00A0'.repeat(longestLen - readyToLive.length)
             default:
         }
     }
@@ -25,36 +37,61 @@ export default class SelectedRentalItemController extends React.Component {
         return <div style={{'marginRight': '5%'}}> { this.translateKey(key) } </div>
     }
 
+    translateNumber(key, item) {
+        console.log("R$ " + item + ",00")
+        return ['price', 'fees'].includes(key) ? 
+            "R$\u00A0" + item + ",00" : 
+            "" + item
+    }
+
     numberDiv(key, value, price) {
-        return (<div key={price} style={{'marginRight': '5%'}}> &nbsp;&nbsp;&nbsp;  R$ {value},00</div>)
+        if (['price', 'fees'].includes(key)) {
+            return (<div key={price} style={{'marginRight': '5%'}}> &nbsp;&nbsp;&nbsp;  R${value},00</div>)
+        } else {
+            return (<div key={price} style={{'marginRight': '5%'}}> &nbsp;&nbsp;&nbsp;  {value}</div>)
+        }
     }
 
     booleanDiv(key, value, price) {
         let testColor = value ? 'green' : 'red'
 
         return (<div key={price} style={{'marginRight': '5%', backgroundColor: testColor, color: testColor}}>{ '\u00A0'.repeat(17) }</div>)
-        // return (<div key={price} style={{'marginRight': '5%', backgroundColor: testColor, color: testColor}}>{'.'.repeat(3 * (key.length % 5))}</div>)
     }
 
-    translateValue(key, value, price) {
-        switch(typeof value) {
-            case 'number': return this.numberDiv(key, value, price)
-            case 'boolean': return this.booleanDiv(key, value, price)
-            default: console.log(typeof value); return <div key={price} style={{'marginRight': '5%'}}>{value.toString()}</div>
+    translateBoolean(key, value) {
+        return value ? 'green' : 'red'
+    }
+
+    translateValue(key, item) {
+        switch(typeof item) {
+            case 'number': return this.translateNumber(key, item)
+            case 'boolean': return this.translateBoolean(key, item)
+            default: return item
         }
     }
 
-    render_items_based_on(key) {
-        return (
-            <section style={{ display: "flex", flexDirection: "row", height: '10px', "margin": "2%", "textAlign": "left", 'alignItems':'left'}} key={key} >
-            { this.toDiv(key) }
-            { this.props.items.map(prop => this.translateValue(key, prop[key], prop['price'])) }
-            {/* { this.props.items.map(prop => <div key={prop['price']} style={{'marginRight': '5%'}}>{prop[key].toString()}</div>) } */}
-            </section>
-        )
+    itemRowFor(key) {
+        let row = this.props.items.map(prop => this.translateValue(key, prop[key]))
+        row.unshift(key)
+
+        return row
     }
 
     render() {
-        return (<>{ this.props.items.length > 0 && ['price', 'hasPool', 'isPetFriendly', 'readyToLive'].map(key => this.render_items_based_on(key)) }</>)
+        let rowList = ['type', 'price', 'fees', 'bedrooms', 'bathrooms', 'parkingSpots', 'hasPool', 'hasBarbecue', 'isPetFriendly', 'readyToLive'].map(key => this.itemRowFor(key))
+
+        let aux = []
+
+        for (let row of rowList) {
+            row = row.slice(0, 10)
+            let rems = '2rem '.repeat(row.length+1)
+            console.log(row)
+            aux.push(
+            <div style={{'display': 'grid', 'gridTemplateColumns': rems, 'gridGap': '2rem', 'gridAutoFlow': 'row', 'columnGap': '6rem'}}>
+                <>{row.map(a => (a === 'red' || a === 'green') ? <div style={{backgroundColor: a, margin:'1px'}}></div> : <div>{a}</div>)}</>
+            </div>)
+        }
+
+        return <div style={{'marginTop': '25px'}}> {aux} </div>
     }
 }
