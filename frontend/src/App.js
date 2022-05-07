@@ -10,7 +10,9 @@ class App extends Component {
   state = {
     lastSelected: 0,
     apiRequest: {},
-    lastClickUpdatedSelected: false
+    lastClickUpdatedSelected: false,
+    initialTimestamp: new Date(),
+    trace: []
   }
 
   simpleButtonFunction = (innerIndex, selectedValue, filterName) => {
@@ -28,7 +30,10 @@ class App extends Component {
       default: delete apiRequest[filterName]
     }
 
-    this.setState({ lastSelected: lastSelected, apiRequest: apiRequest, lastClickUpdatedSelected: lastClickUpdatedSelected })
+    let newTrace = this.state.trace
+    newTrace.push({"time": new Date() - this.state.initialTimestamp, "Filter": filterName})
+
+    this.setState({ lastSelected: lastSelected, apiRequest: apiRequest, lastClickUpdatedSelected: lastClickUpdatedSelected, trace: newTrace })
   }
 
   tieredButtonFunction = (innerIndex, filterName, mustBeInFilters, mustNotBeInFilters) => {
@@ -59,10 +64,13 @@ class App extends Component {
       apiRequestCopy[filterName] = enumFilters
     }
 
-    this.setState({ lastSelected: lastSelected, apiRequest: apiRequestCopy, lastClickUpdatedSelected: lastClickUpdatedSelected })
+    let newTrace = this.state.trace
+    newTrace.push({"time": new Date() - this.state.initialTimestamp, "Filter": filterName})
+
+    this.setState({ lastSelected: lastSelected, apiRequest: apiRequestCopy, lastClickUpdatedSelected: lastClickUpdatedSelected, trace: newTrace })
   }
 
-  sliderFunction = (min, max, innerIndex, filter_name) => {
+  sliderFunction = (min, max, innerIndex, filterName) => {
     let lastSelected = this.state.lastSelected
     let lastClickUpdatedSelected = false
     if (innerIndex >= lastSelected) {
@@ -73,7 +81,7 @@ class App extends Component {
     let currentFilter = {}
     let apiRequestCopy = { ...this.state.apiRequest }
     if (min === -1 && max === -1) {
-      delete apiRequestCopy[filter_name]
+      delete apiRequestCopy[filterName]
     } else {
       if (min !== -1) {
         currentFilter['min'] = min
@@ -81,9 +89,19 @@ class App extends Component {
       if (max !== -1) {
         currentFilter['max'] = max
       }
-      apiRequestCopy[filter_name] = currentFilter
+      apiRequestCopy[filterName] = currentFilter
     }
-    this.setState({ lastSelected: lastSelected, lastClickUpdatedSelected: lastClickUpdatedSelected, apiRequest: apiRequestCopy })
+    let newTrace = this.state.trace
+    newTrace.push({"time": new Date() - this.state.initialTimestamp, "Filter": filterName})
+    this.setState({ lastSelected: lastSelected, lastClickUpdatedSelected: lastClickUpdatedSelected, apiRequest: apiRequestCopy, trace: newTrace })
+  }
+
+  apiRequestFun = () => {
+    console.log("adsa")
+    let newTrace = this.state.trace
+    newTrace.push({"time": new Date() - this.state.initialTimestamp, "Filter": "API"})
+
+    this.setState({ trace: newTrace })
   }
 
   scrollToPlace() {
@@ -130,8 +148,9 @@ class App extends Component {
       <div>{buttons}</div>
       <div style={{'fontSize': '30px', 'textAlign': 'center'}}>Resultados abaixo</div>
       <div className='idk' ref={this.messagesEndRef} />
-      <ApiRequest apiRequest={this.state.apiRequest} />
+      <ApiRequest apiRequest={this.state.apiRequest} traceFun={this.apiRequestFun} />
       <button style={{ "background": '#9fe5e1', "height": "40px", width: "100%", "marginBottom": "2%", "fontSize": "18px", 'marginTop': '20px'}} onClick={() => this.scrollToPlace()}>Voltar para cima</button>
+      <button onClick={() => console.log(this.state.trace)}>Finalizar</button>
     </>)
   }
 }

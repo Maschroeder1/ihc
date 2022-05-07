@@ -106,11 +106,12 @@ export default class ApiRequest extends React.Component {
             this.setState({selectedItems: newSelectedItems})
         }
         window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' })
+        this.props.traceFun()
     }
 
     render() {
         return (<div>
-            <div> <RentalItemVisibilityController items={this.state.items} currentFilter={this.props.apiRequest}/> </div>
+            <div> <RentalItemVisibilityController items={this.state.items} currentFilter={this.props.apiRequest} traceFun={this.props.traceFun} /> </div>
             <div> <SelectedRentalItemController items={this.state.selectedItems} /></div>
         </div>)
     }

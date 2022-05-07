@@ -38,7 +38,6 @@ export default class SelectedRentalItemController extends React.Component {
     }
 
     translateNumber(key, item) {
-        console.log("R$ " + item + ",00")
         return ['price', 'fees'].includes(key) ? 
             "R$\u00A0" + item + ",00" : 
             "" + item
@@ -85,7 +84,6 @@ export default class SelectedRentalItemController extends React.Component {
         for (let row of rowList) {
             row = row.slice(0, 10)
             let rems = '2rem '.repeat(row.length+1)
-            console.log(row)
             aux.push(
             <div style={{'display': 'grid', 'gridTemplateColumns': rems, 'gridGap': '2rem', 'gridAutoFlow': 'row', 'columnGap': '6rem'}}>
                 <>{row.map(a => (a === 'red' || a === 'green') ? <div style={{backgroundColor: a, margin:'1px'}}></div> : <div>{a}</div>)}</>
