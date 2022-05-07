@@ -55,25 +55,6 @@ export default class RentalItemVisibilityController extends React.Component {
         return boolValuesMatch && rangeValuesMatch && enumValuesMatch
     }
 
-    gridItems(buttons) {
-        const MAX_BUTTONS_PER_ROW = 5
-        let sections = []
-
-        for (let i = 0; i < buttons.length; i += MAX_BUTTONS_PER_ROW) {
-            sections.push(<section style={{ flexDirection: "row"}} key={i}>
-                {buttons.slice(i, i + MAX_BUTTONS_PER_ROW)}
-            </section>)
-        }
-
-
-        return <section style={{ flexDirection: 'row', height: "100px", margin: "1%", justifyContent: 'space-around'}} key={1}>{buttons}</section>
-    }
-
-    format(rentalItems) {
-
-        return this.gridItems(rentalItems)
-    }
-
     render() {
         let visibleChildren = this.props.items.filter(item => this.isVisible(item.props, this.props.currentFilter))
         let rems = '15rem '.repeat(7)

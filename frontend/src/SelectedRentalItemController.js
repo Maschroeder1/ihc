@@ -33,28 +33,10 @@ export default class SelectedRentalItemController extends React.Component {
         }
     }
 
-    toDiv(key) {
-        return <div style={{'marginRight': '5%'}}> { this.translateKey(key) } </div>
-    }
-
     translateNumber(key, item) {
         return ['price', 'fees'].includes(key) ? 
             "R$\u00A0" + item + ",00" : 
             "" + item
-    }
-
-    numberDiv(key, value, price) {
-        if (['price', 'fees'].includes(key)) {
-            return (<div key={price} style={{'marginRight': '5%'}}> &nbsp;&nbsp;&nbsp;  R${value},00</div>)
-        } else {
-            return (<div key={price} style={{'marginRight': '5%'}}> &nbsp;&nbsp;&nbsp;  {value}</div>)
-        }
-    }
-
-    booleanDiv(key, value, price) {
-        let testColor = value ? 'green' : 'red'
-
-        return (<div key={price} style={{'marginRight': '5%', backgroundColor: testColor, color: testColor}}>{ '\u00A0'.repeat(17) }</div>)
     }
 
     translateBoolean(key, value) {
