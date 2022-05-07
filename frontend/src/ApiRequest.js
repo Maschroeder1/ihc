@@ -82,7 +82,7 @@ export default class ApiRequest extends React.Component {
     }
 
     mockApiReturn(request) {
-        return this.generateRandomApartments(15)
+        return this.generateRandomApartments(100)
     }
 
     requestApi(request) {
@@ -105,7 +105,7 @@ export default class ApiRequest extends React.Component {
             newSelectedItems.splice(i, 1)
             this.setState({selectedItems: newSelectedItems})
         }
-        window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' })
+        this.props.pageBottom.current.scrollIntoView({ behavior: "smooth",  block: 'end' });
         this.props.traceFun()
     }
 

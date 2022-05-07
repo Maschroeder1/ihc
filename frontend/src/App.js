@@ -6,6 +6,7 @@ import Slider from './SliderFunction'
 
 class App extends Component {
   messagesEndRef = React.createRef()
+  pageBottom = React.createRef()
 
   state = {
     lastSelected: 0,
@@ -145,8 +146,9 @@ class App extends Component {
 
     return (<>
       <div>{buttons}</div>
-      <ApiRequest apiRequest={this.state.apiRequest} traceFun={this.apiRequestFun} scrollAnchor={this.messagesEndRef} />
+      <ApiRequest apiRequest={this.state.apiRequest} traceFun={this.apiRequestFun} scrollAnchor={this.messagesEndRef} pageBottom={this.pageBottom} />
       <button style={{ "background": '#9fe5e1', "height": "40px", width: "100%", "marginBottom": "2%", "fontSize": "18px", 'marginTop': '20px'}} onClick={() => this.scrollToPlace()}>Voltar para cima</button>
+      <div key={'reff'} ref={this.props.pageBottom} />
       <button onClick={() => console.log(this.state.trace)}>Finalizar</button>
     </>)
   }

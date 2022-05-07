@@ -68,7 +68,7 @@ export default class RentalItemVisibilityController extends React.Component {
         let nextRows = this.buildOtherRows(items.slice(itemsPerRow+1), itemsPerRow, rem, rowNumber+1)
 
         return (<>
-            <div key={rowNumber} style={{'display': 'grid', 'gridTemplateColumns': rowRems, 'gridGap': '1rem', 'gridAutoFlow': 'row', 'marginBottom': '1rem'}}>{rowItems}</div>
+            <div key={rowNumber} style={{'display': 'grid', 'gridTemplateColumns': rowRems, 'gridGap': '1rem', 'gridAutoFlow': 'row', 'marginBottom': '2rem'}}>{rowItems}</div>
             {nextRows}
         </>)
     }
@@ -79,7 +79,7 @@ export default class RentalItemVisibilityController extends React.Component {
         let visibleChildren = this.props.items.filter(item => this.isVisible(item.props, this.props.currentFilter))
         let firstRow = visibleChildren.slice(0,columnsPerRow)
         let firstRowRems = rem.repeat(firstRow.length)
-        firstRow = <div key='first' style={{'display': 'grid', 'gridTemplateColumns': firstRowRems, 'gridGap': '1rem', 'gridAutoFlow': 'row', 'marginBottom': '1rem'}}>{firstRow}</div>
+        firstRow = <div key='first' style={{'display': 'grid', 'gridTemplateColumns': firstRowRems, 'gridGap': '1rem', 'gridAutoFlow': 'row', 'marginBottom': '2rem'}}>{firstRow}</div>
 
         
         return (<>

@@ -61,7 +61,7 @@ const Slider = ({ min, max, text, filterName, id, renameAttempt, parentId }) => 
     }, [minVal, maxVal, renameAttempt]);
 
     return (
-        <div style={{'marginBottom': '10%'}}> { parentId >= innerId &&
+        <div style={{'marginBottom': '5%'}}> { parentId >= innerId &&
         <div> 
             <div style={{ "textAlign": "center", 'marginBottom': '1%', "fontSize": "25px" }}>{_text}</div>
             <div className="container">

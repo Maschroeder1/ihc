@@ -19,17 +19,17 @@ export default class SelectedRentalItemController extends React.Component {
         let readyToLive = 'readyToLive'
         let longestLen = 'Ready to live:'.length
         switch(key) {
-            case type: return 'Tipo:' + '\u00A0'.repeat(longestLen - type.length)
-            case price: return 'Preço:' + '\u00A0'.repeat(longestLen - price.length)
-            case fees: return 'Taxas:' + '\u00A0'.repeat(longestLen - fees.length)
-            case bedrooms: return 'Quartos:' + '\u00A0'.repeat(longestLen - bedrooms.length)
-            case bathrooms: return 'Banheiros:' + '\u00A0'.repeat(longestLen - bathrooms.length)
-            case parkingSpots: return 'Vagas:' + '\u00A0'.repeat(longestLen - parkingSpots.length)
-            case hasPool: return 'Tem piscina:' + '\u00A0'.repeat(longestLen - hasPool.length -1)
-            case hasBarbecue: return 'Tem Churrasqueira:' + '\u00A0'.repeat(longestLen - hasBarbecue.length -1)
-            case isPetFriendly: return 'Pet friendly:' + '\u00A0'.repeat(longestLen - isPetFriendly.length + 4)
-            case readyToLive: return 'Pronto para morar:' + '\u00A0'.repeat(longestLen - readyToLive.length)
-            default:
+            case type: return 'Tipo:'
+            case price: return 'Preço:'
+            case fees: return 'Taxas:'
+            case bedrooms: return 'Quartos:'
+            case bathrooms: return 'Banheiros:'
+            case parkingSpots: return 'Vagas:'
+            case hasPool: return 'Tem piscina:'
+            case hasBarbecue: return 'Tem Churrasqueira:'
+            case isPetFriendly: return 'Pet friendly:'
+            case readyToLive: return 'Pronto para morar:'
+            default: return key
         }
     }
 
@@ -53,9 +53,34 @@ export default class SelectedRentalItemController extends React.Component {
 
     itemRowFor(key) {
         let row = this.props.items.map(prop => this.translateValue(key, prop[key]))
-        row.unshift(key)
+        row.unshift(this.translateKey(key))
 
         return row
+    }
+
+    coloredDivFor(color) {
+        return <div style={{backgroundColor: color, width: '100%', margin:'5px'}}></div>
+    }
+
+    translateString(type) {
+        switch(type) {
+            case "TRADITIONAL": return 'Tradicional'
+            case "STUDIO": return 'JK/Studio'
+            case "KITNET": return 'Kitnet'
+            case "FLAT": return 'Flat'
+            case "LOFT": return 'Loft'
+            case "FLOOR": return 'Andar'
+            case "ROOFTOP": return 'Cobertura'
+            case "SINGLE_FAMILY": return 'Casa residencial'
+            case "DUPLEX": return 'Duplex'
+            case "CABIN": return 'Sítio'
+            case "HOA": return 'Casa em condominínio'
+            default: return type
+        }
+    }
+
+    textDivFor(value) {
+        return <div style={{height:'45px'}}>{this.translateString(value)}</div>
     }
 
     render() {
@@ -64,11 +89,11 @@ export default class SelectedRentalItemController extends React.Component {
         let aux = []
 
         for (let row of rowList) {
-            row = row.slice(0, 10)
+            row = row.slice(0, 15)
             let rems = '2rem '.repeat(row.length+1)
             aux.push(
             <div style={{'display': 'grid', 'gridTemplateColumns': rems, 'gridGap': '2rem', 'gridAutoFlow': 'row', 'columnGap': '6rem'}}>
-                <>{row.map(a => (a === 'red' || a === 'green') ? <div style={{backgroundColor: a, margin:'1px'}}></div> : <div>{a}</div>)}</>
+                <>{row.map(a => (a === 'red' || a === 'green') ? this.coloredDivFor(a) : this.textDivFor(a))}</>
             </div>)
         }
 
