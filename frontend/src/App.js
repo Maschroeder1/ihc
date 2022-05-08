@@ -13,7 +13,8 @@ class App extends Component {
     apiRequest: {},
     lastClickUpdatedSelected: false,
     initialTimestamp: new Date(),
-    trace: []
+    trace: [],
+    visibilityMode: 0
   }
 
   simpleButtonFunction = (innerIndex, selectedValue, filterName) => {
@@ -382,7 +383,7 @@ class App extends Component {
     )
   }
 
-  render() {
+  simpleView() {
     let housingTypes = [
       {
         text: "Apartamento", filterName: "ANY1", children: [
@@ -401,7 +402,7 @@ class App extends Component {
           { text: "Sítio", filterName: "CABIN" },
           { text: "Casa em condomínio", filterName: "HOA" }]
       }]
-    let buttons = [
+    return [
       <Slider text={'Faixa de preço do aluguel?'} filterName={'TOTAL_PRICE_RANGE'} id={0} key={-5} min={1000} max={10000} parentId={this.state.lastSelected} renameAttempt={this.sliderFunction} />,
       <SimpleButton text="Mobiliado?" filterName="READY_TO_LIVE" id={1} key={-3} parentStateFunction={this.simpleButtonFunction} parentId={this.state.lastSelected} updateStateJSON={this.updateStateJSON} buttons={[1, 2]} />,
       <Slider text={'Faixa de preço de taxas como condomínio, gás, etc.?'} filterName={'FEES_PRICE_RANGE'} id={2} key={-4} min={0} max={2000} parentId={this.state.lastSelected} renameAttempt={this.sliderFunction} />,
@@ -413,15 +414,31 @@ class App extends Component {
       <Slider text={'Número de vagas?'} filterName={'PARKING_SPOTS'} id={8} key={3} min={0} max={5} parentId={this.state.lastSelected} renameAttempt={this.sliderFunction} />,
       <SimpleButton text="Com piscina?" filterName="POOL" id={9} key={4} parentStateFunction={this.simpleButtonFunction} parentId={this.state.lastSelected} updateStateJSON={this.updateStateJSON} />
     ]
+  }
+
+  screenSelect() {
+    return (
+      <> 
+          <button onClick={() => this.setState({visibilityMode: -1, initialTimestamp: new Date(), trace: []})}>SIMPLIFICADO</button>
+          <button onClick={() => this.setState({visibilityMode: 1, initialTimestamp: new Date(), trace: []})}>AVANÇADO</button>
+      </>
+    )
+  }
+
+  render() {
 
     return (<>
-      <div>{this.complexView()}</div>
-      <div>{JSON.stringify(this.state.apiRequest)}</div>
-      <div>{buttons}</div>
+      <div>{this.state.visibilityMode === 0 && this.screenSelect()}</div>
+      <div>{this.state.visibilityMode > 0 && this.complexView()}</div>
+      <div>{this.state.visibilityMode < 0 && this.simpleView()}</div>
+      { this.state.visibilityMode !== 0 &&
+        <>
       <ApiRequest apiRequest={this.state.apiRequest} traceFun={this.apiRequestFun} scrollAnchor={this.messagesEndRef} pageBottom={this.pageBottom} />
       <button style={{ "background": '#9fe5e1', "height": "40px", width: "100%", "marginBottom": "2%", "fontSize": "18px", 'marginTop': '20px' }} onClick={() => this.scrollToPlace()}>Voltar para cima</button>
       <div key={'reff'} ref={this.pageBottom} />
       <button onClick={() => console.log(this.state.trace)}>Finalizar</button>
+      </>
+  }
     </>)
   }
 }

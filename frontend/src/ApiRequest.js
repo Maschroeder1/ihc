@@ -82,7 +82,7 @@ export default class ApiRequest extends React.Component {
     }
 
     mockApiReturn(request) {
-        return this.generateRandomApartments(100)
+        return this.generateRandomApartments(1000)
     }
 
     requestApi(request) {
