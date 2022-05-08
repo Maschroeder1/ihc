@@ -113,6 +113,7 @@ class App extends Component {
     if (this.state.lastClickUpdatedSelected) {
       setTimeout(() => {
         this.scrollToPlace()
+        this.setState({lastClickUpdatedSelected: false})
       }, 50)
     }
   }

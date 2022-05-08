@@ -20,7 +20,7 @@ export default class RentalItem extends React.Component {
                 <a onClick={() => this.click()}
                     style={{ background: 'rgba(102, 102, 102, 0.1)', padding: '20px' }}
                     onMouseOver={event => event.target.style.cursor = 'pointer'}>
-                    <div> price: R$ {this.props.price} </div>
+                    <div> preço: R$ {this.props.price} </div>
                     <img src={require('./house.png')} width='100px' height='100px' />
                     <div>{
                         this.state.isSelected &&

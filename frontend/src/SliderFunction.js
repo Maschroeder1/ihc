@@ -103,7 +103,7 @@ const Slider = ({ min, max, text, filterName, id, renameAttempt, parentId }) => 
             </div>
             {showSkipButton &&
                 <div style={{ "textAlign": "center" }}>
-                    <button onClick={() => {setShowSkipButton(false); renameAttempt(-1, -1, innerId, _filter_name)}} style={{ "background": '#9fe5e1', "height": "80px", "width": "10%", 'fontSize': '18px' }}>Skip</button>
+                    <button onClick={() => {setShowSkipButton(false); renameAttempt(-1, -1, innerId, _filter_name)}} style={{ "background": '#9fe5e1', "height": "80px", "width": "10%", 'fontSize': '18px' }}>Pular</button>
                 </div>}
         </div>
         }</div>
