@@ -201,14 +201,6 @@ class App extends Component {
         delete currentApiRequest[filterName]
       }
     } else {
-      // não consegui fazer funfa, era pra fazer aquele controle pra user nao cosneguir baguncar os valores dos forms
-      // let otherKey = Object.keys(apiRequestFilterValue).filter(key => key !== innerFilterName)[0]
-      // console.log(otherKey)
-      // if (otherKey !== undefined) {
-      //   apiRequestFilterValue[innerFilterName] = this.filterValue(+currentValue, apiRequestFilterValue[otherKey], otherKey, defaultLow)
-      // } else {
-      //   apiRequestFilterValue[innerFilterName] = +currentValue
-      // }
 
       apiRequestFilterValue[innerFilterName] = +currentValue
       currentApiRequest[filterName] = apiRequestFilterValue
@@ -229,7 +221,10 @@ class App extends Component {
     let lowInput = <input id={lowName} style={{height:'30px', width: '4rem', marginRight: '10px'}} type="number" onInput={event => this.handleFillableInputChange(filterName, event, 'min', defaultLow)} value={low} />
     let highInput = <input id={highName} style={{height:'30px', width: '4rem'}} type="number" onInput={event => this.handleFillableInputChange(filterName, event, 'max')} value={high} />
 
-    return (<div style={{ display: "flex", flexDirection: "column", height: '80px', width: '300px', "marginTop": "5%", "textAlign": "center", backgroundColor: '#d6d6d6' }}>
+    let boxColor = (low === undefined || high === undefined || low <= high) ? '#d6d6d6' : '#ff0303'
+
+
+    return (<div style={{ display: "flex", flexDirection: "column", height: '80px', width: '300px', "marginTop": "5%", "textAlign": "center", backgroundColor: boxColor}}>
       <div style={{ 'marginTop': '10px', fontSize: '17px' }}>
         {text}
       </div>
