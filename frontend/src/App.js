@@ -299,7 +299,7 @@ class App extends Component {
       <div>{buttons}</div>
       <ApiRequest apiRequest={this.state.apiRequest} traceFun={this.apiRequestFun} scrollAnchor={this.messagesEndRef} pageBottom={this.pageBottom} />
       <button style={{ "background": '#9fe5e1', "height": "40px", width: "100%", "marginBottom": "2%", "fontSize": "18px", 'marginTop': '20px' }} onClick={() => this.scrollToPlace()}>Voltar para cima</button>
-      <div key={'reff'} ref={this.props.pageBottom} />
+      <div key={'reff'} ref={this.pageBottom} />
       <button onClick={() => console.log(this.state.trace)}>Finalizar</button>
     </>)
   }
