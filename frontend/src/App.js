@@ -147,7 +147,7 @@ class App extends Component {
     let selectButton = (<button
       onMouseOver={event => event.target.style.background = "#00ff46"}
       onMouseOut={event => event.target.style.background = selectColor}
-      style={{ "background": selectColor, "height": "2rem", width: "3rem", "marginBottom": "2%", "fontSize": "15px" }}
+      style={{ "background": selectColor, "height": "2rem", width: "90px", 'marginLeft': '20px', "marginBottom": "2%", "fontSize": "15px" }}
       onClick={() => this.boolModifyStateTo(filterName, true)}>
       {"SIM"}
     </button>)
@@ -157,12 +157,12 @@ class App extends Component {
     let deSelectButton = (<button
       onMouseOver={event => event.target.style.background = "#ff0023"}
       onMouseOut={event => event.target.style.background = deSelectColor}
-      style={{ "background": deSelectColor, "height": "2rem", width: "3rem", "marginBottom": "2%", "fontSize": "15px" }}
+      style={{ "background": deSelectColor, "height": "2rem", width: "90px", 'marginLeft': '20px', "marginBottom": "2%", "fontSize": "15px" }}
       onClick={() => this.boolModifyStateTo(filterName, false)}>
       {"NÃO"}
     </button>)
 
-    return (<div style={{ display: "flex", flexDirection: "column", height: '80px', width: '150px', "marginTop": "5%", "textAlign": "center", backgroundColor: '#d6d6d6' }}>
+    return (<div style={{ display: "flex", flexDirection: "column", height: '80px', width: '300px', "marginTop": "5%", "textAlign": "center", backgroundColor: '#d6d6d6' }}>
       <div style={{ 'marginTop': '10px', fontSize: '17px' }}>
         {text}
       </div>
@@ -228,7 +228,7 @@ class App extends Component {
     let lowInput = <input id={lowName} style={{height:'30px', width: '4rem', marginRight: '10px'}} type="number" onInput={event => this.handleFillableInputChange(filterName, event, 'min', defaultLow)} value={low} />
     let highInput = <input id={highName} style={{height:'30px', width: '4rem'}} type="number" onInput={event => this.handleFillableInputChange(filterName, event, 'max')} value={high} />
 
-    return (<div style={{ display: "flex", flexDirection: "column", height: '80px', width: '400px', "marginTop": "5%", "textAlign": "center", backgroundColor: '#d6d6d6' }}>
+    return (<div style={{ display: "flex", flexDirection: "column", height: '80px', width: '300px', "marginTop": "5%", "textAlign": "center", backgroundColor: '#d6d6d6' }}>
       <div style={{ 'marginTop': '10px', fontSize: '17px' }}>
         {text}
       </div>
@@ -244,15 +244,14 @@ class App extends Component {
   complexView() {
     return (
       <>
-        <div style={{ 'display': 'grid', 'gridTemplateColumns': '2rem 2rem 2rem 2rem 18rem 18rem', 'gridGap': '2rem', 'gridAutoFlow': 'row', 'columnGap': '10rem' }}>
+        <div style={{ 'display': 'grid', 'gridTemplateColumns': '4rem 4rem 4rem 4rem', 'gridGap': '4rem', 'gridAutoFlow': 'row', 'columnGap': '20rem' }}>
           {this.boolButton("Pet friendly?", 'PET_FRIENDLY')}
           {this.boolButton("Mobiliado?", 'READY_TO_LIVE')}
           {this.boolButton("Com churrasqueira?", 'BARBECUE')}
           {this.boolButton("Com piscina?", 'POOL')}
-          {this.fillableInputRange("Faixa de preço do aluguel", 'TOTAL_PRICE_RANGE', 1000)}
-          {this.fillableInputRange("Faixa de preço de taxas como condomínio, gás, etc.", 'FEES_PRICE_RANGE', 0)}
         </div>
-        <div style={{ 'display': 'grid', 'gridTemplateColumns': '18rem 18rem 18rem', 'gridGap': '2rem', 'gridAutoFlow': 'row', 'columnGap': '10rem' }}>
+        <div style={{ 'display': 'grid', 'gridTemplateColumns': '14rem 14rem 14rem 14rem', 'gridGap': '2rem', 'gridAutoFlow': 'row', 'columnGap': '10rem' }}>
+          {this.fillableInputRange("Faixa de preço do aluguel", 'TOTAL_PRICE_RANGE', 1000)} 
           {this.fillableInputRange("Número de quartos", 'BEDROOM COUNT', 0)}
           {this.fillableInputRange("Número de banheiros", 'BATHROOM_COUNT', 0)}
           {this.fillableInputRange("Número de vagas", 'PARKING_SPOTS', 0)}
